@@ -1,0 +1,25 @@
+<!--<app-spinner *ngIf="loadingPlayer"></app-spinner>-->
+
+<div class="title-div">
+  <div class="name">
+    <div>
+      {{ player?.firstName + ' ' + player?.lastName }}
+    </div>
+  </div>
+  <div class="icons">
+    <button mat-icon-button (click)="showComponent('info')" *ngIf="!showPlayerDetails">
+      <mat-icon>info</mat-icon>
+    </button>
+    <button mat-icon-button (click)="showComponent('stats')" *ngIf="!showPlayerStats">
+      <mat-icon>bar_chart</mat-icon>
+    </button>
+    <button mat-icon-button (click)="showComponent('achievements')" *ngIf="!showAchievements">
+      <mat-icon>emoji_events</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+<app-player-details *ngIf="showPlayerDetails && player && playerMatches" [player]="player" [playerMatches]="playerMatches" [allSeasons]="allSeasons"></app-player-details>
+<app-player-stats *ngIf="showPlayerStats" [player]="player" [playerMatches]="playerMatches" [allSeasons]="allSeasons"></app-player-stats>
+<app-achievements *ngIf="showAchievements" [player]="player"></app-achievements>

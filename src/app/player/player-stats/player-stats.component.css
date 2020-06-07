@@ -1,0 +1,11 @@
+td {
+    padding-right: 16px;
+    padding-top: 8px;
+}
+
+chart {
+    width: 90% !important;
+    margin: 8px auto;
+    margin-left: 2px;
+    display: block;
+}

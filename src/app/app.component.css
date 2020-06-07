@@ -1,0 +1,22 @@
+.title-div {
+    text-align: center; 
+    background-color: black; 
+    color: white; 
+    border-radius: 3px; 
+    opacity: 80%;
+    padding-left: 16px;
+    padding-right: 8px;
+    margin-bottom: 8px;
+}
+
+.name {
+    display: inline-block;
+    text-align: left;
+    width: 60%;
+}
+
+.icons {
+    display: inline-block;
+    text-align: right;
+    width: 40%;
+}

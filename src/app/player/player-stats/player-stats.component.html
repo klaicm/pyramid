@@ -1,0 +1,85 @@
+<mat-form-field>
+  <mat-label>Odabir sezone</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let season of allSeasons" [value]="season">
+      {{season.seasonName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<table>
+  <tr>
+    <td>
+      Pobjede
+    </td>
+    <td>
+      {{playerWins}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Porazi
+    </td>
+    <td>
+      {{playerLoses}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Postotak pobjeda
+    </td>
+    <td>
+      {{percentage | number:'1.0-0'}} %
+    </td>
+  </tr>
+</table>
+
+<div>
+  <chart [options]="winPercentage"> </chart>
+</div>
+
+<mat-divider></mat-divider>
+
+<table>
+  <tr>
+    <td>
+      Trenutni red
+    </td>
+    <td>
+      {{player.playerStats.currentRow}}.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Najbolji red
+    </td>
+    <td>
+      {{player.playerStats.bestRow}}.
+    </td>
+  </tr>
+</table>
+
+<div>
+  <chart [options]="rowsColumn"> </chart>
+</div>
+
+<mat-divider></mat-divider>
+
+<table>
+  <tr>
+    <td>
+      Trenutni niz pobjeda
+    </td>
+    <td>
+      {{player.playerStats.currentStreak}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Najdulji niz pobjeda
+    </td>
+    <td>
+      {{player.playerStats.bestStreak}}
+    </td>
+  </tr>
+</table>

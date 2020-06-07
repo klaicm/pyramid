@@ -1,0 +1,46 @@
+<div class="title-div">
+    <div class="name">
+        <div>
+            Piramida
+        </div>
+    </div>
+    <div class="icons">
+        <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-form-field class="roundSelect">
+    <mat-select placeholder="Odaberi kolo">
+        <mat-option *ngFor="let round of allRounds" [value]="round.id" (click)="getRoundMatches(round.id)">
+            {{round.roundDescription}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<table style="width: 100%">
+    <tr *ngFor="let match of roundMatches; let i = index">
+        <div *ngIf="match.challengerRow != roundMatches[i-1]?.challengerRow || !match.roundDescription === 'Prijateljska'" style="margin-top: 16px; background: lightgrey; border-radius: 4px; padding-left: 8px">
+            {{match.challengerRow}} -> {{match.defenderRow}}
+        </div>
+        <div style="padding-top: 2px; padding-bottom: 2px;">
+            <div style="font-size: 13px; width: 40%; display: inline-block;">
+                <a (click)="navigateToPlayer(match.playerRowAttacker.id)" [ngStyle]="stylePlayerWinner(match.playerRowAttacker.id, match)">{{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}}</a>
+            </div>
+            <div style="font-size: 13px; width: 40%; display: inline-block;">
+                <a (click)="navigateToPlayer(match.playerRowDefender.id)" [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">
+                    - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}</a>
+            </div>
+            <div style="font-size: 13px; width: 18%; display: inline-block;">
+                <a *ngIf="!match.matchPlayed" (click)="navigateToMatchInput(match)" [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">Unos</a>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid lightgray">
+            <td>
+                {{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}
+            </td>
+        </div>
+
+    </tr>
+</table>

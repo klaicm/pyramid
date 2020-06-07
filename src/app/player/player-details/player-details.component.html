@@ -1,0 +1,67 @@
+<table>
+  <tr>
+    <td class="description-column">
+      Trenutni red
+    </td>
+    <td class="description-column">
+      {{currentRow}}
+    </td>
+  </tr>
+  <tr>
+    <td class="description-column">
+      Status
+    </td>
+    <td class="description-column">
+      {{status}}
+    </td>
+  </tr>
+  <tr>
+    <td class="description-column">
+      Protivnik
+    </td>
+    <td class="description-column">
+        <a (click)="navigateToPlayer(opponent.id)">{{opponent?.firstName}} {{opponent?.lastName}}</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="description-column">
+      Kolo
+    </td>
+    <td class="description-column">
+      {{currentMatch?.round.roundDescription}}
+    </td>
+  </tr>
+</table>
+
+<br>
+<div class="example-button-row">
+  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput(currentMatch)" *ngIf="currentMatch">Unos rezultata</button>
+  <button mat-raised-button color="accent" style="margin-right: 8px" (click)="matchInput({})">Unos friendly rezultata</button>
+</div>
+<br>
+<mat-form-field>
+  <mat-label>Odabir sezone</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let season of allSeasons" [value]="season">
+      {{season.seasonName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+
+<div *ngFor="let match of playerMatches" [ngStyle]="styleMatch(player?.id, match)">
+  <div *ngIf="match.matchPlayed" style="padding: 4px">
+    <table>
+      <tr>
+        {{match.matchDate | date:'dd.MM.yyyy.'}}
+      </tr>
+      <tr style="font-size: 10px">
+        {{match.round.roundDescription}}
+      </tr>
+      <tr>
+        <td>{{(player?.id === match?.playerWinner.id) ? (match?.playerDefeated.firstName + ' ' + match?.playerDefeated.lastName) : (match?.playerWinner.firstName + ' ' + match?.playerWinner.lastName)}}</td>
+        <td style="text-align: right;">{{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
