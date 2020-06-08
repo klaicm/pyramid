@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PlayerService } from 'src/app/player/player.service';
 import { OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/player/player.model';
 import { OnDestroy } from '@angular/core';
 import { MatchService } from 'src/app/fixtures/match.service';
@@ -27,7 +27,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   allSeasons: Array<Season>;
 
   constructor(private playerService: PlayerService, private matchService: MatchService, private activatedRoute: ActivatedRoute,
-    private seasonService: SeasonService) { }
+    private seasonService: SeasonService, private router: Router) { }
 
   ngOnInit(): void {
     this.getPlayerId();
@@ -54,6 +54,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
           console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
         }
       });
+  }
+
+  backToHome() {
+    this.router.navigate(['/']);
   }
 
   getPlayerMatches(playerId: number) {

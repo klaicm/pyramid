@@ -1,9 +1,9 @@
 .title-div {
     text-align: center; 
-    background-color: black; 
+    background-color: #3f51b5; 
     color: white; 
     border-radius: 3px; 
-    opacity: 80%;
+    /*opacity: 80%;*/
     padding-left: 16px;
     padding-right: 8px;
     margin-bottom: 8px;

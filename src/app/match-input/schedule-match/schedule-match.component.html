@@ -1,4 +1,15 @@
-<h4 style="margin-top: 32px">Unos novog meča</h4>
+<div class="title-div">
+    <div class="name">
+        <div>
+            Unos novog meča
+        </div>
+    </div>
+    <div class="icons">
+        <button mat-icon-button (click)="backToHome()">
+            <mat-icon>home</mat-icon>
+        </button>
+    </div>
+</div>
 
 <form [formGroup]="matchFormGroup">
     <mat-form-field class="setResult">
@@ -40,7 +51,8 @@
 
     <section>
 
-        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()">Unos novog meča</button>
+        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()">Unos novog
+            meča</button>
     </section>
 
 </form>

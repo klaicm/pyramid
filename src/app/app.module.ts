@@ -27,6 +27,11 @@ import { ScheduleMatchComponent } from 'src/app/match-input/schedule-match/sched
 import { MatDividerModule } from '@angular/material/divider';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { ChartModule } from 'angular2-highcharts';
+import 'hammerjs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddPlayerComponent } from './player/add-player/add-player.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -42,7 +47,8 @@ export function highchartsFactory() {
     AchievementsComponent,
     PlayerDetailsComponent,
     MatchInputComponent,
-    ScheduleMatchComponent
+    ScheduleMatchComponent,
+    AddPlayerComponent
   ],
   imports: [
     RouterModule.forRoot(routing),
@@ -61,7 +67,10 @@ export function highchartsFactory() {
     MatDatepickerModule,
     MatNativeDateModule,
     MatDividerModule,
-    ChartModule
+    ChartModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    MatAutocompleteModule
   ],
   providers: [
     {

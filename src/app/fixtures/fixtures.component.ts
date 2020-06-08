@@ -18,6 +18,7 @@ export class FixturesComponent implements OnInit {
     matches: Array<any>;
     roundMatches: Array<any>;
     allRounds: Array<Round>;
+    currentRound: Round;
 
     constructor(private playerService: PlayerService, private matchService: MatchService, private router: Router) { }
 
@@ -26,6 +27,9 @@ export class FixturesComponent implements OnInit {
         this.matchService.getAllRounds().subscribe(response => {
             this.allRounds = response;
             this.allRounds.sort((a, b) => a.round > b.round ? -1 : 1);
+            this.currentRound = this.allRounds[0];
+
+            this.getRoundMatches(this.currentRound);
         });
 
         // unneccessary here
@@ -40,8 +44,8 @@ export class FixturesComponent implements OnInit {
 
     }
 
-    getRoundMatches(roundId: number) {
-        this.matchService.getRoundMatches(roundId).subscribe(response => {
+    getRoundMatches(round: Round) {
+        this.matchService.getRoundMatches(round.id).subscribe(response => {
             this.roundMatches = response;
             this.roundMatches.sort((a: Match, b: Match) => a.challengerRow > b.challengerRow ? 1 : -1);
         });
@@ -60,8 +64,20 @@ export class FixturesComponent implements OnInit {
         }
     }
 
+    compareObjects(o1: any, o2: any): boolean {
+        return o1.id === o2.id;
+    }
+
     navigateToMatchInput(match: Match) {
         this.matchService.setCurrentMatch(match);
         this.router.navigate(['/match-input']);
+    }
+
+    addNewPlayer() {
+        this.router.navigate(['/add-player']);
+    }
+
+    navigateToScheduleMatch() {
+        this.router.navigate(['/schedule-match']);
     }
 }

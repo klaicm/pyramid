@@ -18,20 +18,23 @@ export class PlayerStatsComponent implements OnInit, AfterViewInit {
   percentage: number;
   winPercentage: Object;
   rowsColumn: Object;
+  currentSeason: Season;
 
   constructor() { }
 
   ngOnInit() {
 
+    this.currentSeason = this.allSeasons.find((a: Season) => a.id === 2);
     const playedMatches = this.playerMatches.filter((match: Match) => match.matchPlayed);
     this.playerWins = playedMatches.filter((match: Match) => match.playerWinner.id === this.player.id).length;
     this.playerLoses = playedMatches.filter((match: Match) => match.playerDefeated.id === this.player.id).length;
 
     this.percentage = (this.playerWins / (this.playerWins + this.playerLoses)) * 100;
+    this.winPercentagePieChart(this.player);
   }
 
   ngAfterViewInit() {
-    this.winPercentagePieChart(this.player);
+
   }
 
   winPercentagePieChart(player: Player): void {
@@ -123,6 +126,10 @@ export class PlayerStatsComponent implements OnInit, AfterViewInit {
         data: [2, 1, 2, 3, 4, 3],
       }]
     };
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.id === o2.id;
   }
 
 }

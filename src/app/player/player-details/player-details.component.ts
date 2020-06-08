@@ -22,6 +22,7 @@ export class PlayerDetailsComponent implements OnInit {
   status: string;
   opponent: Player;
   currentRow: number;
+  currentSeason: Season;
 
   constructor(private router: Router, private matchService: MatchService, private playerService: PlayerService,
     private seasonService: SeasonService) {
@@ -29,6 +30,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentSeason = this.allSeasons.find((a: Season) => a.id === 2);
     this.currentMatch = this.playerMatches.find((match: Match) => match.matchPlayed === false);
     if (this.currentMatch) {
       if (this.currentMatch.playerRowAttacker.id === this.player.id) {
@@ -71,5 +73,9 @@ export class PlayerDetailsComponent implements OnInit {
       return { 'background-color': 'rgb(231, 12, 12, 0.1)', 'border-radius': '4px', 'margin-bottom': '8px' };
     }
   }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.id === o2.id;
+}
 
 }

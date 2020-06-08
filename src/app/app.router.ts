@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AchievementsComponent } from 'src/app/player/achievements/achievements.component';
 import { MatchInputComponent } from 'src/app/match-input/match-input.component';
 import { ScheduleMatchComponent } from 'src/app/match-input/schedule-match/schedule-match.component';
+import { AddPlayerComponent } from './player/add-player/add-player.component';
 
 /**
  * Main app router and routes
@@ -21,5 +22,6 @@ export const routing: Routes = [
         ]
     },
     { path: 'match-input', component: MatchInputComponent },
-    { path: 'schedule-match', component: ScheduleMatchComponent }
+    { path: 'schedule-match', component: ScheduleMatchComponent },
+    { path: 'add-player', component: AddPlayerComponent }
 ];

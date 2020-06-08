@@ -7,6 +7,8 @@ import { PlayerService } from 'src/app/player/player.service';
 import { Player } from 'src/app/player/player.model';
 import { Round } from 'src/app/fixtures/round.model';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { SnackMessageService } from '../shared/services/snackbar-message.service';
 
 
 @Component({
@@ -40,7 +42,8 @@ export class MatchInputComponent implements OnInit, OnDestroy {
     isNewMatch = true;
     allPlayers: Array<Player>;
 
-    constructor(private matchService: MatchService, private playerService: PlayerService, private location: Location) {
+    constructor(private matchService: MatchService, private playerService: PlayerService, private location: Location,
+        private router: Router, private snackMessageService: SnackMessageService) {
         this.matchFormGroup = new FormGroup({
             playerWinnerFormControl: new FormControl('', Validators.required),
             playerDefeatedFormControl: new FormControl('', Validators.required),
@@ -100,8 +103,10 @@ export class MatchInputComponent implements OnInit, OnDestroy {
                     console.error('Nije uspješno spremljeno.');
                     console.log(this.currentMatch);
                 }
+
+                this.snackMessageService.showSuccess('Spremljeno!');
                 this.location.back();
-            }, 3000);
+            }, 1000);
         });
     }
 
@@ -151,6 +156,10 @@ export class MatchInputComponent implements OnInit, OnDestroy {
         });
 
     }
+
+    backToHome() {
+        this.router.navigate(['/']);
+      }
 
     ngOnDestroy() {
         this.currentMatchSub.unsubscribe();

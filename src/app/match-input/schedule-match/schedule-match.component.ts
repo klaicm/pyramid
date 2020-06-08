@@ -8,6 +8,7 @@ import { Round } from 'src/app/fixtures/round.model';
 import { SeasonService } from 'src/app/shared/services/season.service';
 import { Season } from 'src/app/shared/models/season.model';
 import { MatRadioChange } from '@angular/material/radio';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-schedule-match',
@@ -27,7 +28,8 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
     challengersPlayers: Array<Player>;
     defendersPlayers: Array<Player>;
 
-    constructor(private playerService: PlayerService, private matchService: MatchService, private seasonService: SeasonService) {
+    constructor(private playerService: PlayerService, private matchService: MatchService, private seasonService: SeasonService,
+        private router: Router) {
         this.matchFormGroup = new FormGroup({
             playerChallengerFormControl: new FormControl('', Validators.required),
             playerDefenderFormControl: new FormControl('', Validators.required),
@@ -97,7 +99,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
                     console.error('Nije uspješno spremljeno.');
                     console.log(round);
                 }
-            }, 3000);
+            }, 1000);
         });
     }
 
@@ -123,6 +125,10 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
                 }
             }, 3000);
         });
+    }
+
+    backToHome() {
+        this.router.navigate(['/']);
     }
 
     radioChange($event: MatRadioChange) {

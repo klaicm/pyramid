@@ -7,8 +7,11 @@
     </div>
   </div>
   <div class="icons">
+    <button mat-icon-button (click)="backToHome()">
+      <mat-icon>home</mat-icon>
+    </button>
     <button mat-icon-button (click)="showComponent('info')" *ngIf="!showPlayerDetails">
-      <mat-icon>info</mat-icon>
+      <mat-icon>person</mat-icon>
     </button>
     <button mat-icon-button (click)="showComponent('stats')" *ngIf="!showPlayerStats">
       <mat-icon>bar_chart</mat-icon>

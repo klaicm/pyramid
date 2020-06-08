@@ -36,12 +36,12 @@
 <br>
 <div class="example-button-row">
   <button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput(currentMatch)" *ngIf="currentMatch">Unos rezultata</button>
-  <button mat-raised-button color="accent" style="margin-right: 8px" (click)="matchInput({})">Unos friendly rezultata</button>
+  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput({})">Unos prijateljskog meča</button>
 </div>
 <br>
 <mat-form-field>
   <mat-label>Odabir sezone</mat-label>
-  <mat-select>
+  <mat-select [compareWith]="compareObjects" [(ngModel)]="currentSeason">
     <mat-option *ngFor="let season of allSeasons" [value]="season">
       {{season.seasonName}}
     </mat-option>

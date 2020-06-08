@@ -1,0 +1,60 @@
+<div class="title-div">
+    <div class="name">
+        <div>
+            Dodavanje novog igrača
+        </div>
+    </div>
+    <div class="icons">
+        <button mat-icon-button (click)="backToHome()">
+            <mat-icon>home</mat-icon>
+        </button>
+    </div>
+</div>
+
+<form [formGroup]="playerFormGroup">
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Ime</mat-label>
+            <input matInput formControlName="firstNameFormControl">
+        </mat-form-field>
+
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Prezime</mat-label>
+            <input matInput formControlName="lastNameFormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="emailFormControl">
+        </mat-form-field>
+
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Broj mobitela</mat-label>
+            <input matInput formControlName="phoneNumberFormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Red</mat-label>
+            <input matInput formControlName="rowFormControl">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Aktivan" formControlName="isActiveFormControl">
+                <mat-option [value]="true">
+                    DA
+                </mat-option>
+                <mat-option [value]="false">
+                    NE
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+
+
+    <button mat-raised-button color="primary" style="margin-right: 8px" (click)="addNewRound()">Dodaj igrača</button>
+
+</form>
