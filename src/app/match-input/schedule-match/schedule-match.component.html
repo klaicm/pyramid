@@ -14,13 +14,13 @@
 <form [formGroup]="matchFormGroup">
     <mat-form-field class="setResult">
         <mat-select placeholder="Kolo" formControlName="roundFormControl">
-            <mat-option *ngFor="let round of allRounds" [value]="round">
+            <mat-option *ngFor="let round of allRounds" [value]="round" (click)="getRoundMatches(round)">
                 {{round.roundDescription}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <section>
+    <section style="margin-top: 16px;">
         <label id="example-radio-group-label">Izazivači: </label>
         <mat-radio-group formControlName="challengerOddityFormControl">
             <mat-radio-button value="even" style="margin-left: 8px;">
@@ -31,64 +31,37 @@
             </mat-radio-button>
         </mat-radio-group>
     </section>
+</form>
 
-    <section style="margin-top: 8px">
+<mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>
+
+<mat-slide-toggle style="margin-top: 16px;" [(ngModel)]="sameRowMatchAllowed">Dozvoljen susret istog reda: {{sameRowMatchAllowed}}</mat-slide-toggle>
+
+<!--<mat-slide-toggle formControlName="enableSameRowFormControl">Dozvoljen meč igrača istog reda</mat-slide-toggle>-->
+<form [formGroup]="matchFormGroup">
+    <section style="margin-top: 16px;">
         <mat-form-field style="width: 45%; margin-right: 16px">
             <mat-select placeholder="Izazivač" formControlName="playerChallengerFormControl">
-                <mat-option *ngFor="let player of challengersPlayers" [value]="player">
+                <mat-option *ngFor="let player of (sameRowMatchAllowed ? challengersPlayers.concat(defendersPlayers) : challengersPlayers)" [value]="player">
                     ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 45%">
             <mat-select placeholder="Izazvani" formControlName="playerDefenderFormControl">
-                <mat-option *ngFor="let player of defendersPlayers" [value]="player">
+                <mat-option *ngFor="let player of (sameRowMatchAllowed ? defendersPlayers.concat(challengersPlayers) : defendersPlayers)" [value]="player">
                     ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </section>
 
-    <section>
+    <section style="margin-top: 16px;">
 
-        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()">Unos novog
-            meča</button>
+        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()">Unos novog meča
+        </button>
     </section>
 
 </form>
 
 <mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>
-
-<h4>Unos novog kola</h4>
-<form [formGroup]="roundFormGroup">
-
-    <mat-form-field class="setResult">
-        <mat-select placeholder="Sezona" formControlName="seasonFormControl">
-            <mat-option *ngFor="let season of allSeasons" [value]="season">
-                {{season.seasonName}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="setResult">
-        <input matInput placeholder="Broj kola (validator samo broj)" formControlName="roundNumberFormControl">
-    </mat-form-field>
-
-    <section>
-        <mat-form-field style="width: 40%; margin-right: 16px">
-            <mat-label>Datum od</mat-label>
-            <input matInput [matDatepicker]="pickerFrom" formControlName="matchDateFromFormControl">
-            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-            <mat-datepicker #pickerFrom></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field style="width: 40%">
-            <mat-label>Datum do</mat-label>
-            <input matInput [matDatepicker]="pickerTo" formControlName="matchDateToFormControl">
-            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-            <mat-datepicker #pickerTo></mat-datepicker>
-        </mat-form-field>
-    </section>
-
-    <button mat-raised-button color="primary" style="margin-right: 8px" (click)="addNewRound()">Unos novog kola</button>
-
-</form>

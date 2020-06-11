@@ -41,20 +41,18 @@
             <mat-label>Red</mat-label>
             <input matInput formControlName="rowFormControl">
         </mat-form-field>
+        
+    </section>
 
-        <mat-form-field>
-            <mat-select placeholder="Aktivan" formControlName="isActiveFormControl">
-                <mat-option [value]="true">
-                    DA
-                </mat-option>
-                <mat-option [value]="false">
-                    NE
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <p style="margin-top: 16px">Aktivan: </p>
+    <section style="text-align: left; margin-top: 8px;">
+        <mat-radio-group aria-label="Aktivan" formControlName="isActiveFormControl">
+            <mat-radio-button style="margin-right: 16px" [value]="true">DA</mat-radio-button>
+            <mat-radio-button [value]="false">NE</mat-radio-button>
+        </mat-radio-group>
     </section>
 
 
-    <button mat-raised-button color="primary" style="margin-right: 8px" (click)="addNewRound()">Dodaj igrača</button>
+    <button mat-raised-button color="primary" style="margin-right: 8px; margin-top: 16px" (click)="addNewPlayer()">Dodaj igrača</button>
 
 </form>

@@ -1,5 +1,6 @@
 import { Match } from "src/app/fixtures/match.model";
 import { Achievement } from "src/app/shared/models/achievement.model";
+import { PlayerStats } from "src/app/player/player-stats/player-stats.model";
 
 export class Player {
 
@@ -7,18 +8,13 @@ export class Player {
     firstName: String;
     lastName: String;
     dateOfBirth: number;
-    userMail: number;
-    password: number;
-    isActive: number;
+    phoneNumber: string;
+    userMail: string;
+    password: string;
+    isActive: boolean;
     playerWins: Array<Match>;
     playerLoses: Array<Match>;
-    playerStats: {
-        playerStatsId: number;
-        bestRow: number;
-        bestStreak: number;
-        currentRow: number;
-        currentStreak: number;
-    };
+    playerStats: PlayerStats;
     playerAchievements: Array<Achievement>;
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Season } from 'src/app/shared/models/season.model';
 import { Match } from 'src/app/fixtures/match.model';
@@ -8,7 +8,7 @@ import { Match } from 'src/app/fixtures/match.model';
   templateUrl: './player-stats.component.html',
   styleUrls: ['./player-stats.component.css']
 })
-export class PlayerStatsComponent implements OnInit, AfterViewInit {
+export class PlayerStatsComponent implements OnInit {
 
   @Input() player: Player;
   @Input() allSeasons: Array<Season>;
@@ -24,17 +24,36 @@ export class PlayerStatsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.currentSeason = this.allSeasons.find((a: Season) => a.id === 2);
-    const playedMatches = this.playerMatches.filter((match: Match) => match.matchPlayed);
-    this.playerWins = playedMatches.filter((match: Match) => match.playerWinner.id === this.player.id).length;
-    this.playerLoses = playedMatches.filter((match: Match) => match.playerDefeated.id === this.player.id).length;
+    this.currentSeason = this.allSeasons.find((a: Season) => a.currentSeason === true);
+
+    this.calculateStatsForSeason(this.currentSeason);
+
+  }
+
+  calculateStatsForSeason(season: Season) {
+
+    const playerAllPlayedMatches = this.playerMatches.filter((match: Match) => match.matchPlayed);
+    const seasonRounds = season.rounds;
+
+    const playerSeasonMatches = [];
+
+    for (let i = 0; i < playerAllPlayedMatches.length; i++) {
+      const roundMatch = playerAllPlayedMatches[i].round;
+
+      for (let j = 0; j < seasonRounds.length; j++) {
+        const currSeasonRound = seasonRounds[j];
+
+        if (currSeasonRound.id === roundMatch.id) {
+          playerSeasonMatches.push(playerAllPlayedMatches[i]);
+        }
+      }
+    }
+
+    this.playerWins = playerSeasonMatches.filter((match: Match) => match.playerWinner.id === this.player.id).length;
+    this.playerLoses = playerSeasonMatches.filter((match: Match) => match.playerDefeated.id === this.player.id).length;
 
     this.percentage = (this.playerWins / (this.playerWins + this.playerLoses)) * 100;
     this.winPercentagePieChart(this.player);
-  }
-
-  ngAfterViewInit() {
-
   }
 
   winPercentagePieChart(player: Player): void {

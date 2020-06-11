@@ -6,3 +6,8 @@ td {
 .description-column {
     width: 30%;
 }
+
+a {
+    color: black;
+    cursor: pointer;
+}

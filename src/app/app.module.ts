@@ -18,7 +18,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { PlayerDetailsComponent } from './player/player-details/player-details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { MatchInputComponent } from 'src/app/match-input/match-input.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,6 +31,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPlayerComponent } from './player/add-player/add-player.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RoundComponent } from 'src/app/fixtures/round/round.component';
+import { PlayerContactComponent } from 'src/app/player/player-contact/player-contact.component';
+import { ModifyPlayerComponent } from 'src/app/player/modify-player/modify-player.component';
+import { MatchInputComponent } from 'src/app/match-input/existing-match/match-input.component';
+import { FriendlyMatchComponent } from 'src/app/match-input/friendly-match/friendly-match.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -48,7 +53,11 @@ export function highchartsFactory() {
     PlayerDetailsComponent,
     MatchInputComponent,
     ScheduleMatchComponent,
-    AddPlayerComponent
+    AddPlayerComponent,
+    RoundComponent,
+    PlayerContactComponent,
+    ModifyPlayerComponent,
+    FriendlyMatchComponent
   ],
   imports: [
     RouterModule.forRoot(routing),
@@ -70,7 +79,8 @@ export function highchartsFactory() {
     ChartModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSlideToggleModule
   ],
   providers: [
     {

@@ -4,7 +4,7 @@ export class Round {
 
     id: number;
     roundDescription: string;
-    round: number;
+    roundNumber: number;
     dateFrom: Date;
     dateTo: Date;
     season: Season;

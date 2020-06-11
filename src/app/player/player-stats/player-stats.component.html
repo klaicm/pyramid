@@ -1,8 +1,8 @@
 
-<mat-form-field>
+<mat-form-field style="margin-top: 8px">
   <mat-label>Odabir sezone</mat-label>
   <mat-select [compareWith]="compareObjects" [(ngModel)]="currentSeason">
-    <mat-option *ngFor="let season of allSeasons" [value]="season">
+    <mat-option *ngFor="let season of allSeasons" [value]="season" (click)="calculateStatsForSeason(season)">
       {{season.seasonName}}
     </mat-option>
   </mat-select>

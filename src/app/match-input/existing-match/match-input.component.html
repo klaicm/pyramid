@@ -1,0 +1,68 @@
+<div class="title-div">
+    <div class="name">
+        <div>
+            Unos rezultata
+        </div>
+    </div>
+    <div class="icons">
+        <button mat-icon-button (click)="backToHome()">
+            <mat-icon>home</mat-icon>
+        </button>
+    </div>
+</div>
+
+<form [formGroup]="matchFormGroup">
+
+    <p style="margin-top: 16px">Pobjednik: </p>
+    <section style="text-align: left; margin-top: 8px;">
+        <mat-radio-group aria-label="Pobjednik" formControlName="playerWinnerFormControl">
+            <mat-radio-button [value]="currentMatch?.playerRowAttacker">{{currentMatch?.playerRowAttacker.firstName}} {{currentMatch?.playerRowAttacker.lastName}}
+            </mat-radio-button>
+            <mat-radio-button [value]="currentMatch?.playerRowDefender">{{currentMatch?.playerRowDefender.firstName}} {{currentMatch?.playerRowDefender.lastName}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </section>
+
+    <p style="margin-top: 16px">Rezultat: </p>
+    <section>
+        <mat-form-field class="set-result">
+            <mat-select placeholder="1. set" formControlName="firstSetFormControl">
+                <mat-option *ngFor="let result of allResults" [value]="result">
+                    {{result}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="set-result">
+            <mat-select placeholder="2. set" formControlName="secondSetFormControl">
+                <mat-option *ngFor="let result of allResults" [value]="result">
+                    {{result}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="input-result">
+            <input matInput placeholder="3.(Izazivač)" formControlName="thirdSet1FormControl">
+        </mat-form-field>
+        <mat-form-field class="input-result">
+            <input matInput placeholder="3.(Izazvani)" formControlName="thirdSet2FormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field class="date-input">
+            <mat-label>Datum odigravanja</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="matchDateFormControl">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </section>
+
+    <section>
+        <button mat-raised-button color="primary" style="margin-right: 8px" (click)="saveSeasonMatch()">Unos rezultata
+        </button>
+        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="deleteMatch()">Obriši meč (admin)
+        </button>
+    </section>
+
+</form>

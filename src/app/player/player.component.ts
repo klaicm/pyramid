@@ -18,9 +18,10 @@ import { Season } from 'src/app/shared/models/season.model';
 export class PlayerComponent implements OnInit, OnDestroy {
 
   player: Player;
-  showPlayerDetails = true;
-  showPlayerStats = false;
+  showPlayerDetails = false;
+  showPlayerStats = true;
   showAchievements = false;
+  showContact = false;
   private sub: Subscription;
   playerLoaded = false;
   playerMatches: Array<Match>;
@@ -44,16 +45,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   getPlayer(playerId: number): void {
-      this.playerService.getPlayer(playerId).subscribe((response: Player) => {
-        if (response) {
-          this.player = response;
-          this.playerService.setCurrentPlayer(this.player);
-          this.getPlayerMatches(playerId);
-          this.playerLoaded = true;
-        } else {
-          console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
-        }
-      });
+    this.playerService.getPlayer(playerId).subscribe((response: Player) => {
+      if (response) {
+        this.player = response;
+        this.playerService.setCurrentPlayer(this.player);
+        this.getPlayerMatches(playerId);
+        this.playerLoaded = true;
+      } else {
+        console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
+      }
+    });
   }
 
   backToHome() {
@@ -63,7 +64,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   getPlayerMatches(playerId: number) {
     this.matchService.getPlayerMatches(playerId).subscribe(response => {
       this.playerMatches = response;
-      this.playerMatches.sort((a, b) => a.matchDate > b.matchDate ? -1 : 1);
+      // this.playerMatches.sort((a, b) => a.matchDate > b.matchDate ? -1 : 1);
     });
   }
 
@@ -72,14 +73,22 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.showPlayerDetails = true;
       this.showPlayerStats = false;
       this.showAchievements = false;
+      this.showContact = false;
     } else if (componentName === 'stats') {
       this.showPlayerDetails = false;
       this.showPlayerStats = true;
       this.showAchievements = false;
+      this.showContact = false;
     } else if (componentName === 'achievements') {
       this.showPlayerDetails = false;
       this.showPlayerStats = false;
       this.showAchievements = true;
+      this.showContact = false;
+    } else if (componentName === 'contact') {
+      this.showPlayerDetails = false;
+      this.showPlayerStats = false;
+      this.showAchievements = false;
+      this.showContact = true;
     }
   }
 

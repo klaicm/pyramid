@@ -13,6 +13,8 @@ export class PlayerService {
     private static PLAYER_URL = environment.url + '/player';
     private static ALL_PLAYERS_URL = environment.url + '/allPlayers';
     private static SAVE_MATCH_URL = environment.url + '/saveMatch';
+    private static ADD_NEW_PLAYER_URL = environment.url + '/addNewPlayer';
+    private static SAVE_PLAYER_URL = environment.url + '/savePlayer';
 
   private player = new BehaviorSubject<Player>(new Player());
 
@@ -22,6 +24,14 @@ export class PlayerService {
 
   setCurrentPlayer(player: Player) {
     this.player.next(player);
+  }
+
+  addNewPlayer(player: Player): Observable<any> {
+    return this.http.post(PlayerService.ADD_NEW_PLAYER_URL, player);
+  }
+
+  savePlayer(player: Player): Observable<any> {
+    return this.http.post(PlayerService.SAVE_PLAYER_URL, player);
   }
 
   getAllPlayers(): Observable<any> {

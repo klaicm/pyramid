@@ -20,7 +20,7 @@
       Protivnik
     </td>
     <td class="description-column">
-        <a (click)="navigateToPlayer(opponent.id)">{{opponent?.firstName}} {{opponent?.lastName}}</a>
+      <a (click)="navigateToPlayer(opponent.id)">{{opponent?.firstName}} {{opponent?.lastName}}</a>
     </td>
   </tr>
   <tr>
@@ -28,28 +28,28 @@
       Kolo
     </td>
     <td class="description-column">
-      {{currentMatch?.round.roundDescription}}
+      {{currentMatch?.round.roundDescription | slice : 0:8 }}
     </td>
   </tr>
 </table>
 
 <br>
 <div class="example-button-row">
-  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput(currentMatch)" *ngIf="currentMatch">Unos rezultata</button>
-  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput({})">Unos prijateljskog meča</button>
+  <!--<button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput(currentMatch)" *ngIf="currentMatch">Unos rezultata</button>-->
+  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="friendlyMatchInput()">Unos prijateljskog meča</button>
 </div>
 <br>
 <mat-form-field>
   <mat-label>Odabir sezone</mat-label>
   <mat-select [compareWith]="compareObjects" [(ngModel)]="currentSeason">
-    <mat-option *ngFor="let season of allSeasons" [value]="season">
+    <mat-option *ngFor="let season of allSeasons" [value]="season" (click)="showMatchesForSeason(season)">
       {{season.seasonName}}
     </mat-option>
   </mat-select>
 </mat-form-field>
 <br>
 
-<div *ngFor="let match of playerMatches" [ngStyle]="styleMatch(player?.id, match)">
+<div *ngFor="let match of playerSeasonMatches" [ngStyle]="styleMatch(player?.id, match)">
   <div *ngIf="match.matchPlayed" style="padding: 4px">
     <table>
       <tr>
@@ -59,7 +59,8 @@
         {{match.round.roundDescription}}
       </tr>
       <tr>
-        <td>{{(player?.id === match?.playerWinner.id) ? (match?.playerDefeated.firstName + ' ' + match?.playerDefeated.lastName) : (match?.playerWinner.firstName + ' ' + match?.playerWinner.lastName)}}</td>
+        <td><a (click)="navigateToPlayer(player?.id === match?.playerWinner.id ? match?.playerDefeated.id : match?.playerWinner.id)">{{(player?.id === match?.playerWinner.id) ? (match?.playerDefeated.firstName + ' ' + match?.playerDefeated.lastName)
+          : (match?.playerWinner.firstName + ' ' + match?.playerWinner.lastName)}}</a></td>
         <td style="text-align: right;">{{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}</td>
       </tr>
     </table>

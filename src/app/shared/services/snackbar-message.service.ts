@@ -10,15 +10,17 @@ export class SnackMessageService {
 
   showError(message: string) {
     const config = new MatSnackBarConfig();
-    config.panelClass = ['snackbar-background-red'];
+    config.panelClass = ['red-snackbar'];
     config.duration = 4000;
+    config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }
 
   showSuccess(message: string) {
     const config = new MatSnackBarConfig();
-    config.panelClass = ['snackbar-background-green'];
+    config.panelClass = ['gree-snackbar'];
     config.duration = 4000;
+    config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }
 }

@@ -9,6 +9,8 @@ import { SeasonService } from 'src/app/shared/services/season.service';
 import { Season } from 'src/app/shared/models/season.model';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { SnackMessageService } from 'src/app/shared/services/snackbar-message.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-schedule-match',
@@ -27,21 +29,16 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
     allRounds: Array<Round>;
     challengersPlayers: Array<Player>;
     defendersPlayers: Array<Player>;
+    roundMatches: Array<Match>;
+    sameRowMatchAllowed = false;
 
     constructor(private playerService: PlayerService, private matchService: MatchService, private seasonService: SeasonService,
-        private router: Router) {
+        private router: Router, private snackMessageService: SnackMessageService) {
         this.matchFormGroup = new FormGroup({
             playerChallengerFormControl: new FormControl('', Validators.required),
             playerDefenderFormControl: new FormControl('', Validators.required),
             roundFormControl: new FormControl('', Validators.required),
             challengerOddityFormControl: new FormControl('', Validators.required)
-        });
-
-        this.roundFormGroup = new FormGroup({
-            seasonFormControl: new FormControl('', Validators.required),
-            roundNumberFormControl: new FormControl('', Validators.required),
-            matchDateFromFormControl: new FormControl('', Validators.required),
-            matchDateToFormControl: new FormControl('', Validators.required)
         });
     }
 
@@ -49,10 +46,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
 
         this.playerService.getAllPlayers().subscribe(response => {
             this.allPlayers = response;
-            this.evenRoundPlayers = this.allPlayers.filter((player: Player) => player.playerStats.currentRow % 2 === 0)
-                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
-            this.oddRoundPlayers = this.allPlayers.filter((player: Player) => player.playerStats.currentRow % 2 !== 0)
-                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+
         });
 
         this.seasonService.getAllSeasons().subscribe(seasons => {
@@ -61,7 +55,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
 
         this.matchService.getAllRounds().subscribe(rounds => {
             this.allRounds = rounds;
-            this.allRounds.sort((a: Round, b: Round) => a.round > b.round ? -1 : 1);
+            this.allRounds.sort((a: Round, b: Round) => a.roundNumber > b.roundNumber ? -1 : 1);
         });
 
     }
@@ -78,28 +72,20 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
         });
     }
 
-    addNewRound() {
+    getRoundMatches(round: Round) {
+        this.matchService.getRoundMatches(round.id).subscribe(response => {
+            this.roundMatches = response;
 
-        const round = new Round();
+            const assigned: Array<number> = [];
+            this.roundMatches.forEach(a => (assigned.push(a.playerRowAttacker.id) && assigned.push(a.playerRowDefender.id)));
 
-        round.round = this.roundFormGroup.get('roundNumberFormControl').value;
-        round.dateFrom = this.roundFormGroup.get('matchDateFromFormControl').value;
-        round.dateTo = this.roundFormGroup.get('matchDateToFormControl').value;
-        round.season = this.roundFormGroup.get('seasonFormControl').value;
-        round.roundDescription =
-            round.round + '. kolo (' + round.dateFrom.toLocaleDateString().substring(0, 5).replace('/', '.') + '. - '
-            + round.dateTo.toLocaleDateString().substring(0, 5).replace('/', '.') + '.) - ' + round.season.seasonName;
+            const unassignedPlayers = this.allPlayers.filter((player: Player) => assigned.indexOf(player.id) === -1);
 
-        this.matchService.addNewRound(round).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                    console.error('Uspješno spremljeno.');
-                } else {
-                    console.error('Nije uspješno spremljeno.');
-                    console.log(round);
-                }
-            }, 1000);
+            this.evenRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 === 0)
+                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+            this.oddRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 !== 0)
+                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+
         });
     }
 
@@ -123,7 +109,14 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
                     console.error('Nije uspješno spremljeno.');
                     console.log(match);
                 }
-            }, 3000);
+            }, 1000);
+
+            this.challengersPlayers.splice(this.challengersPlayers.findIndex((a: Player) => a === match.playerRowAttacker), 1);
+            this.defendersPlayers.splice(this.defendersPlayers.findIndex((a: Player) => a === match.playerRowDefender), 1);
+
+            this.snackMessageService.showSuccess('Unesen novi meč: ' +
+                match.playerRowAttacker.firstName + ' ' + match.playerRowAttacker.lastName +
+                ' : ' + match.playerRowDefender.firstName + ' ' + match.playerRowDefender.lastName);
         });
     }
 

@@ -1,0 +1,47 @@
+<div class="title-div">
+    <div class="name">
+        <div>
+            Unos novog kola
+        </div>
+    </div>
+    <div class="icons">
+        <button mat-icon-button (click)="backToHome()">
+            <mat-icon>home</mat-icon>
+        </button>
+    </div>
+</div>
+
+<form [formGroup]="roundFormGroup">
+
+    <mat-form-field class="setResult">
+        <mat-select placeholder="Sezona" formControlName="seasonFormControl">
+            <mat-option *ngFor="let season of allSeasons" [value]="season">
+                {{season.seasonName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <section>
+        <mat-form-field class="setResult">
+            <input matInput placeholder="Broj kola (validator samo broj)" formControlName="roundNumberFormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field style="width: 40%; margin-right: 16px">
+            <mat-label>Datum od</mat-label>
+            <input matInput [matDatepicker]="pickerFrom" formControlName="matchDateFromFormControl">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field style="width: 40%">
+            <mat-label>Datum do</mat-label>
+            <input matInput [matDatepicker]="pickerTo" formControlName="matchDateToFormControl">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+    </section>
+
+    <button mat-raised-button color="primary" style="margin-right: 8px" (click)="addNewRound()">Unos novog kola</button>
+
+</form>

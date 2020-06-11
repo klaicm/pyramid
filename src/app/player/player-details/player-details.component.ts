@@ -23,6 +23,7 @@ export class PlayerDetailsComponent implements OnInit {
   opponent: Player;
   currentRow: number;
   currentSeason: Season;
+  playerSeasonMatches: Array<Match> = [];
 
   constructor(private router: Router, private matchService: MatchService, private playerService: PlayerService,
     private seasonService: SeasonService) {
@@ -30,17 +31,19 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentSeason = this.allSeasons.find((a: Season) => a.id === 2);
+
+    this.currentSeason = this.allSeasons.find((a: Season) => a.currentSeason === true);
+    this.showMatchesForSeason(this.currentSeason);
     this.currentMatch = this.playerMatches.find((match: Match) => match.matchPlayed === false);
     if (this.currentMatch) {
       if (this.currentMatch.playerRowAttacker.id === this.player.id) {
         this.status = 'Izazivač';
         this.opponent = this.currentMatch.playerRowDefender;
-        this.currentRow = this.currentMatch.challengerRow;
+        this.currentRow = this.currentMatch.playerRowAttacker.playerStats.currentRow;
       } else {
         this.status = 'Izazvani';
         this.opponent = this.currentMatch.playerRowAttacker;
-        this.currentRow = this.currentMatch.defenderRow;
+        this.currentRow = this.currentMatch.playerRowDefender.playerStats.currentRow;
       }
     } else {
       this.currentRow = this.player.playerStats.currentRow;
@@ -49,20 +52,33 @@ export class PlayerDetailsComponent implements OnInit {
 
   }
 
-  matchInput(currentMatch: Match) {
-    if (currentMatch) {
-      this.matchService.setCurrentMatch(currentMatch);
-      this.router.navigate(['/match-input']);
-    } else {
-      this.playerService.setCurrentPlayer(this.player);
-      this.matchService.setCurrentMatch(new Match);
-      this.router.navigate(['/match-input']);
-    }
+  showMatchesForSeason(season: Season) {
+    const seasonRounds = season.rounds;
 
+    this.playerSeasonMatches = [];
+    for (let i = 0; i < this.playerMatches.length; i++) {
+      const roundMatch = this.playerMatches[i].round;
+
+      for (let j = 0; j < seasonRounds.length; j++) {
+        const currSeasonRound = seasonRounds[j];
+
+        if (currSeasonRound.id === roundMatch.id) {
+          this.playerSeasonMatches.push(this.playerMatches[i]);
+          this.playerSeasonMatches.sort((a, b) => a.matchDate > b.matchDate ? -1 : 1);
+        }
+      }
+    }
+  }
+
+  friendlyMatchInput() {
+    this.playerService.setCurrentPlayer(this.player);
+    this.router.navigate(['/friendly-match']);
   }
 
   navigateToPlayer(playerId: number) {
-    this.router.navigate(['/player', playerId]);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/player', playerId]);
+    });
   }
 
   styleMatch(playerId: number, match: Match): Object {
@@ -76,6 +92,6 @@ export class PlayerDetailsComponent implements OnInit {
 
   compareObjects(o1: any, o2: any): boolean {
     return o1.id === o2.id;
-}
+  }
 
 }

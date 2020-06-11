@@ -1,12 +1,14 @@
 import { FixturesComponent } from 'src/app/fixtures/fixtures.component';
 import { PlayerComponent } from 'src/app/player/player.component';
-import { PlayerStatsComponent } from 'src/app/player/player-stats/player-stats.component';
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AchievementsComponent } from 'src/app/player/achievements/achievements.component';
-import { MatchInputComponent } from 'src/app/match-input/match-input.component';
 import { ScheduleMatchComponent } from 'src/app/match-input/schedule-match/schedule-match.component';
 import { AddPlayerComponent } from './player/add-player/add-player.component';
+import { RoundComponent } from 'src/app/fixtures/round/round.component';
+import { PlayerContactComponent } from 'src/app/player/player-contact/player-contact.component';
+import { ModifyPlayerComponent } from 'src/app/player/modify-player/modify-player.component';
+import { MatchInputComponent } from 'src/app/match-input/existing-match/match-input.component';
+import { FriendlyMatchComponent } from 'src/app/match-input/friendly-match/friendly-match.component';
 
 /**
  * Main app router and routes
@@ -14,14 +16,11 @@ import { AddPlayerComponent } from './player/add-player/add-player.component';
  */
 export const routing: Routes = [
     { path: '', component: FixturesComponent, },
-    {
-        path: 'player/:id', component: PlayerComponent,
-        children: [
-            { path: 'player-stats', component: PlayerStatsComponent },
-            { path: 'achievements', component: AchievementsComponent }
-        ]
-    },
-    { path: 'match-input', component: MatchInputComponent },
+    { path: 'player/:id', component: PlayerComponent },
+    { path: 'match-input/:id', component: MatchInputComponent },
     { path: 'schedule-match', component: ScheduleMatchComponent },
-    { path: 'add-player', component: AddPlayerComponent }
+    { path: 'add-player', component: AddPlayerComponent },
+    { path: 'round-input', component: RoundComponent },
+    { path: 'modify-player', component: ModifyPlayerComponent },
+    { path: 'friendly-match', component: FriendlyMatchComponent }
 ];

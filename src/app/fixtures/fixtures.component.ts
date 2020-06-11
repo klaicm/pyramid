@@ -26,7 +26,8 @@ export class FixturesComponent implements OnInit {
 
         this.matchService.getAllRounds().subscribe(response => {
             this.allRounds = response;
-            this.allRounds.sort((a, b) => a.round > b.round ? -1 : 1);
+            this.allRounds.splice(this.allRounds.findIndex(a => a.roundNumber === 0), 1);
+            this.allRounds.sort((a, b) => a.roundNumber > b.roundNumber ? -1 : 1);
             this.currentRound = this.allRounds[0];
 
             this.getRoundMatches(this.currentRound);
@@ -69,12 +70,20 @@ export class FixturesComponent implements OnInit {
     }
 
     navigateToMatchInput(match: Match) {
-        this.matchService.setCurrentMatch(match);
-        this.router.navigate(['/match-input']);
+        // this.matchService.setCurrentMatch(match);
+        this.router.navigate(['/match-input', match.id]);
+    }
+
+    navigateToRoundInput() {
+        this.router.navigate(['/round-input']);
     }
 
     addNewPlayer() {
         this.router.navigate(['/add-player']);
+    }
+
+    modifyPlayer() {
+        this.router.navigate(['/modify-player']);
     }
 
     navigateToScheduleMatch() {

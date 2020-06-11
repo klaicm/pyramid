@@ -18,6 +18,8 @@ export class MatchService {
     private static ALL_ROUNDS_URL = environment.url + '/allRounds';
     private static ROUND_MATCHES_URL = environment.url + '/roundMatches';
     private static ADD_ROUND_URL = environment.url + '/addRound';
+    private static DELETE_MATCH_URL = environment.url + '/deleteMatch';
+    private static MATCH_URL = environment.url + '/match';
 
     private match = new BehaviorSubject<Match>(new Match());
 
@@ -27,6 +29,10 @@ export class MatchService {
 
   getAllMatches(): Observable<any> {
     return this.http.get(MatchService.ALL_MATCHES_URL);
+  }
+
+  getMatch(matchId: number): Observable<any> {
+    return this.http.get(`${MatchService.MATCH_URL}/${matchId}`);
   }
 
   getPlayerMatches(playerId: number): Observable<any> {
@@ -43,6 +49,10 @@ export class MatchService {
 
   saveMatch(match: Match): Observable<any> {
     return this.http.post(MatchService.SAVE_MATCH_URL, match);
+  }
+
+  deleteMatch(match: Match): Observable<any> {
+    return this.http.post(MatchService.DELETE_MATCH_URL, match);
   }
 
   setCurrentMatch(match: Match) {
