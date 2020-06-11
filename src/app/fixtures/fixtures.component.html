@@ -10,15 +10,20 @@
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="addNewPlayer()">
-                <mat-icon>person_add_alt_1</mat-icon>Dodaj novog igrača</button>
+                <mat-icon>person_add_alt_1</mat-icon>Dodaj novog igrača
+            </button>
             <button mat-menu-item (click)="modifyPlayer()">
-                <mat-icon>edit</mat-icon>Izmjena podataka igrača</button>
+                <mat-icon>edit</mat-icon>Izmjena podataka igrača
+            </button>
             <button mat-menu-item (click)="navigateToScheduleMatch()">
-                <mat-icon>playlist_add</mat-icon>Dodaj nove mečeve</button>
+                <mat-icon>playlist_add</mat-icon>Dodaj nove mečeve
+            </button>
             <button mat-menu-item (click)="navigateToRoundInput()">
-                <mat-icon>plus_one</mat-icon>Dodaj novo kolo</button>
+                <mat-icon>plus_one</mat-icon>Dodaj novo kolo
+            </button>
             <button mat-menu-item>
-                <mat-icon>post_add</mat-icon>Dodaj novu sezonu</button>
+                <mat-icon>post_add</mat-icon>Dodaj novu sezonu
+            </button>
         </mat-menu>
         <button mat-icon-button>
             <mat-icon>person_search</mat-icon>
@@ -36,18 +41,20 @@
 
 <table style="width: 100%">
     <tr *ngFor="let match of roundMatches; let i = index">
-        <div *ngIf="match?.challengerRow != roundMatches[i-1]?.challengerRow || !match?.round.roundNumber === 0" style="margin-top: 16px; background: lightgrey; border-radius: 4px; padding-left: 8px">
+        <div *ngIf="match?.challengerRow != roundMatches[i-1]?.challengerRow || !match?.round.roundNumber === 0"
+            style="margin-top: 16px; background: lightgrey; border-radius: 4px; padding-left: 8px">
             {{match?.challengerRow}} -> {{match?.defenderRow}}
         </div>
         <div style="padding-top: 2px; padding-bottom: 2px;">
             <div style="font-size: 13px; width: 40%; display: inline-block;">
-                <a (click)="navigateToPlayer(match?.playerRowAttacker.id)" [ngStyle]="stylePlayerWinner(match.playerRowAttacker.id, match)">
-                    {{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}} ({{match?.playerRowAttacker.playerStats.currentRow}}.)
-                </a>
+                <a (click)="navigateToPlayer(match?.playerRowAttacker.id)"
+                    [ngStyle]="stylePlayerWinner(match.playerRowAttacker.id, match)">
+                    {{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}} </a>
             </div>
             <div style="font-size: 13px; width: 40%; display: inline-block;">
-                <a (click)="navigateToPlayer(match?.playerRowDefender.id)" [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">
-                    - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}} ({{match?.playerRowDefender.playerStats.currentRow}}.)</a>
+                <a (click)="navigateToPlayer(match?.playerRowDefender.id)"
+                    [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">
+                    - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}</a>
             </div>
             <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;">
                 <a class="res-input" *ngIf="!match.matchPlayed" (click)="navigateToMatchInput(match)">Unos</a>

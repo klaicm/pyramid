@@ -14,6 +14,7 @@ export class MatchService {
     // private static ROUND_MATCHES_URL = environment.url + '/roundMatches';
     private static ALL_MATCHES_URL = environment.url + '/allMatches';
     private static SAVE_MATCH_URL = environment.url + '/saveMatch';
+    private static SCHEDULE_MATCH_URL = environment.url + '/scheduleMatch';
     private static PLAYER_MATCHES_URL = environment.url + '/playerMatches';
     private static ALL_ROUNDS_URL = environment.url + '/allRounds';
     private static ROUND_MATCHES_URL = environment.url + '/roundMatches';
@@ -49,6 +50,10 @@ export class MatchService {
 
   saveMatch(match: Match): Observable<any> {
     return this.http.post(MatchService.SAVE_MATCH_URL, match);
+  }
+
+  scheduleMatch(match: Match): Observable<any> {
+    return this.http.post(MatchService.SCHEDULE_MATCH_URL, match);
   }
 
   deleteMatch(match: Match): Observable<any> {

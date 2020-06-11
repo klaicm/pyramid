@@ -100,7 +100,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
         match.round = this.matchFormGroup.get('roundFormControl').value;
 
 
-        this.matchService.saveMatch(match).subscribe(response => {
+        this.matchService.scheduleMatch(match).subscribe(response => {
             setTimeout(() => {
                 const listen = response;
                 if (response) {
