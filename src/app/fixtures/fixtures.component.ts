@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatchService } from 'src/app/fixtures/match.service';
 import { Match } from 'src/app/fixtures/match.model';
 import { Round } from 'src/app/fixtures/round.model';
+import { SnackMessageService } from '../shared/services/snackbar-message.service';
 
 @Component({
     selector: 'app-fixtures',
@@ -19,8 +20,9 @@ export class FixturesComponent implements OnInit {
     roundMatches: Array<any>;
     allRounds: Array<Round>;
     currentRound: Round;
+    spinnerOn = false;
 
-    constructor(private playerService: PlayerService, private matchService: MatchService, private router: Router) { }
+    constructor(private matchService: MatchService, private router: Router, private snackbarMessageService: SnackMessageService) { }
 
     ngOnInit() {
 
@@ -33,11 +35,6 @@ export class FixturesComponent implements OnInit {
             this.getRoundMatches(this.currentRound);
         });
 
-        // unneccessary here
-        this.playerService.getAllPlayers().subscribe(response => {
-            this.players = response;
-        });
-
         this.matchService.getAllMatches().subscribe(response => {
             this.matches = response;
             this.matches.sort((a, b) => (a.playerRowChallengerId > b.playerRowChallengerId) ? 1 : -1);
@@ -46,9 +43,15 @@ export class FixturesComponent implements OnInit {
     }
 
     getRoundMatches(round: Round) {
+        this.spinnerOn = true;
         this.matchService.getRoundMatches(round.id).subscribe(response => {
-            this.roundMatches = response;
-            this.roundMatches.sort((a: Match, b: Match) => a.challengerRow > b.challengerRow ? 1 : -1);
+            if (response) {
+                this.spinnerOn = false;
+                this.roundMatches = response;
+                this.roundMatches.sort((a: Match, b: Match) => a.challengerRow > b.challengerRow ? 1 : -1);
+            } else {
+                this.snackbarMessageService.showError('Neuspješan dohvat podataka');
+            }
         });
     }
 

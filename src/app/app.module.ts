@@ -37,6 +37,9 @@ import { ModifyPlayerComponent } from 'src/app/player/modify-player/modify-playe
 import { MatchInputComponent } from 'src/app/match-input/existing-match/match-input.component';
 import { FriendlyMatchComponent } from 'src/app/match-input/friendly-match/friendly-match.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -57,7 +60,8 @@ export function highchartsFactory() {
     RoundComponent,
     PlayerContactComponent,
     ModifyPlayerComponent,
-    FriendlyMatchComponent
+    FriendlyMatchComponent,
+    SpinnerComponent
   ],
   imports: [
     RouterModule.forRoot(routing),
@@ -80,7 +84,9 @@ export function highchartsFactory() {
     MatMenuModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTabsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {

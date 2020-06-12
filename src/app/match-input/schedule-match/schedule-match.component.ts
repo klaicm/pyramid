@@ -31,6 +31,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
     defendersPlayers: Array<Player>;
     roundMatches: Array<Match>;
     sameRowMatchAllowed = false;
+    spinnerOn = false;
 
     constructor(private playerService: PlayerService, private matchService: MatchService, private seasonService: SeasonService,
         private router: Router, private snackMessageService: SnackMessageService) {
@@ -73,23 +74,34 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
     }
 
     getRoundMatches(round: Round) {
+        this.spinnerOn = true;
         this.matchService.getRoundMatches(round.id).subscribe(response => {
-            this.roundMatches = response;
 
-            const assigned: Array<number> = [];
-            this.roundMatches.forEach(a => (assigned.push(a.playerRowAttacker.id) && assigned.push(a.playerRowDefender.id)));
+            if (response) {
+                this.spinnerOn = false;
 
-            const unassignedPlayers = this.allPlayers.filter((player: Player) => assigned.indexOf(player.id) === -1);
+                this.roundMatches = response;
 
-            this.evenRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 === 0)
-                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
-            this.oddRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 !== 0)
-                .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+                const assigned: Array<number> = [];
+                this.roundMatches.forEach(a => (assigned.push(a.playerRowAttacker.id) && assigned.push(a.playerRowDefender.id)));
+
+                const unassignedPlayers = this.allPlayers.filter((player: Player) => assigned.indexOf(player.id) === -1);
+
+                this.evenRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 === 0)
+                    .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+                this.oddRoundPlayers = unassignedPlayers.filter((player: Player) => player.playerStats.currentRow % 2 !== 0)
+                    .sort((a: Player, b: Player) => a.playerStats.currentRow > b.playerStats.currentRow ? 1 : -1);
+            } else {
+                this.spinnerOn = false;
+                this.snackMessageService.showError('Greška prilikom dohvata podataka.');
+            }
 
         });
     }
 
     scheduleMatch() {
+
+        this.spinnerOn = true;
 
         const match = new Match();
 
@@ -99,25 +111,29 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
         match.defenderRow = match.playerRowDefender.playerStats.currentRow;
         match.round = this.matchFormGroup.get('roundFormControl').value;
 
+        setTimeout(() => {
+            this.matchService.scheduleMatch(match).subscribe(() => {
+                this.spinnerOn = false;
 
-        this.matchService.scheduleMatch(match).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                    console.error('Uspješno spremljeno.');
-                } else {
-                    console.error('Nije uspješno spremljeno.');
-                    console.log(match);
+                this.challengersPlayers.splice(this.challengersPlayers.findIndex((a: Player) => a === match.playerRowAttacker), 1);
+                this.defendersPlayers.splice(this.defendersPlayers.findIndex((a: Player) => a === match.playerRowDefender), 1);
+
+                this.snackMessageService.showSuccess('Unesen novi meč: ' +
+                    match.playerRowAttacker.firstName + ' ' + match.playerRowAttacker.lastName +
+                    ' : ' + match.playerRowDefender.firstName + ' ' + match.playerRowDefender.lastName);
+
+                this.matchFormGroup.get('playerChallengerFormControl').reset();
+                this.matchFormGroup.get('playerDefenderFormControl').reset();
+                this.sameRowMatchAllowed = false;
+            },
+                err => {
+                    this.spinnerOn = false;
+                    this.snackMessageService.showError('Neuspješan unos.');
                 }
-            }, 1000);
+            );
+        }, 1000);
 
-            this.challengersPlayers.splice(this.challengersPlayers.findIndex((a: Player) => a === match.playerRowAttacker), 1);
-            this.defendersPlayers.splice(this.defendersPlayers.findIndex((a: Player) => a === match.playerRowDefender), 1);
 
-            this.snackMessageService.showSuccess('Unesen novi meč: ' +
-                match.playerRowAttacker.firstName + ' ' + match.playerRowAttacker.lastName +
-                ' : ' + match.playerRowDefender.firstName + ' ' + match.playerRowDefender.lastName);
-        });
     }
 
     backToHome() {

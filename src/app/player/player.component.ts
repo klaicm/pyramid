@@ -23,7 +23,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   showAchievements = false;
   showContact = false;
   private sub: Subscription;
-  playerLoaded = false;
+  loadingPlayer = true;
   playerMatches: Array<Match>;
   allSeasons: Array<Season>;
 
@@ -45,16 +45,18 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   getPlayer(playerId: number): void {
-    this.playerService.getPlayer(playerId).subscribe((response: Player) => {
-      if (response) {
-        this.player = response;
-        this.playerService.setCurrentPlayer(this.player);
-        this.getPlayerMatches(playerId);
-        this.playerLoaded = true;
-      } else {
-        console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
-      }
-    });
+    setTimeout(() => {
+      this.playerService.getPlayer(playerId).subscribe((response: Player) => {
+        if (response) {
+          this.player = response;
+          this.playerService.setCurrentPlayer(this.player);
+          this.getPlayerMatches(playerId);
+          this.loadingPlayer = false;
+        } else {
+          console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
+        }
+      });
+    }, 1000);
   }
 
   backToHome() {

@@ -20,10 +20,10 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
 
     allResults: Array<string> = ['6:0', '6:1', '6:2', '6:3', '6:4', '7:5', '7:6', '6:7', '5:7', '4:6', '3:6', '2:6', '1:6', '0:6'];
     sub: Subscription;
-    currentPlayer: Player;
     matchFormGroup: FormGroup;
     friendlyRound: Round;
     allPlayers: Array<Player>;
+    spinnerOn = false;
 
     constructor(private playerService: PlayerService, private matchService: MatchService, private location: Location,
         private snackMessageService: SnackMessageService, private router: Router) {
@@ -33,16 +33,13 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
             playerDefeatedFormControl: new FormControl('', Validators.required),
             firstSetFormControl: new FormControl('', Validators.required),
             secondSetFormControl: new FormControl('', Validators.required),
-            thirdSet1FormControl: new FormControl('', Validators.required),
-            thirdSet2FormControl: new FormControl('', Validators.required),
+            thirdSet1FormControl: new FormControl(''),
+            thirdSet2FormControl: new FormControl(''),
             matchDateFormControl: new FormControl('', Validators.required)
         });
     }
 
     ngOnInit() {
-        this.sub = this.playerService.currentPlayer.subscribe(response => {
-            this.currentPlayer = response;
-        });
 
         this.matchService.getAllRounds().subscribe((response: Array<Round>) => {
             this.friendlyRound = response.find(a => a.roundNumber === 0);
@@ -54,6 +51,7 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
     }
 
     saveFriendlyMatch() {
+        this.spinnerOn = true;
         const newFriendlyMatch = new Match;
 
         newFriendlyMatch.playerWinner = this.matchFormGroup.get('playerWinnerFormControl').value;
@@ -73,19 +71,15 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
 
         newFriendlyMatch.round = this.friendlyRound;
 
-        this.matchService.saveMatch(newFriendlyMatch).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                } else {
-                    console.error('Nije uspješno spremljeno.');
-                }
-
-            }, 1000);
-
+        this.matchService.saveMatch(newFriendlyMatch).subscribe(() => {
+            this.spinnerOn = false;
             this.snackMessageService.showSuccess('Spremljeno!');
-            this.location.back();
-        });
+            this.backToHome();
+        }, err => {
+            this.spinnerOn = false;
+            console.error('Nije uspješno spremljeno.');
+        }
+        );
 
     }
 

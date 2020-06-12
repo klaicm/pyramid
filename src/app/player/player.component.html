@@ -1,39 +1,49 @@
-<!--<app-spinner *ngIf="loadingPlayer"></app-spinner>-->
+<app-spinner *ngIf="loadingPlayer"></app-spinner>
 
-<div class="title-div">
-  <div class="name">
-    <div>
-      {{ player?.firstName + ' ' + player?.lastName }}
+<div *ngIf="!loadingPlayer">
+  <div class="title-div">
+    <div class="name">
+      <div>
+        {{ player?.firstName + ' ' + player?.lastName }}
+      </div>
+    </div>
+    <div class="icons">
+      <button mat-icon-button (click)="backToHome()">
+        <mat-icon>home</mat-icon>
+      </button>
     </div>
   </div>
-  <div class="icons">
-    <button mat-icon-button (click)="backToHome()">
-      <mat-icon>home</mat-icon>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="showComponent('info')" *ngIf="!showPlayerDetails">
-        <mat-icon>sports_tennis</mat-icon>Mečevi
-      </button>
-      <button mat-menu-item (click)="showComponent('stats')" *ngIf="!showPlayerStats">
-        <mat-icon>bar_chart</mat-icon>Statistika
-      </button>
-      <button mat-menu-item (click)="showComponent('achievements')" *ngIf="!showAchievements">
-        <mat-icon>emoji_events</mat-icon>Trofeji
-      </button>
-      <button mat-menu-item (click)="showComponent('contact')" *ngIf="!showContact">
-        <mat-icon>contact_phone</mat-icon>Kontakt
-      </button>
-    </mat-menu>
 
-  </div>
+  <mat-tab-group *ngIf="player && playerMatches && allSeasons">
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">bar_chart</mat-icon>
+      </ng-template>
+      <app-player-stats [player]="player" [playerMatches]="playerMatches" [allSeasons]="allSeasons"></app-player-stats>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">sports_tennis</mat-icon>
+      </ng-template>
+      <app-player-details [player]="player" [playerMatches]="playerMatches" [allSeasons]="allSeasons">
+      </app-player-details>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">emoji_events</mat-icon>
+      </ng-template>
+      <app-achievements [player]="player"></app-achievements>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">contact_phone</mat-icon>
+      </ng-template>
+      <app-player-contact [player]="player"></app-player-contact>
+    </mat-tab>
+
+  </mat-tab-group>
 </div>
-
-
-<app-player-details *ngIf="showPlayerDetails" [player]="player" [playerMatches]="playerMatches"
-  [allSeasons]="allSeasons"></app-player-details>
-<app-player-stats *ngIf="showPlayerStats && player && playerMatches" [player]="player" [playerMatches]="playerMatches" [allSeasons]="allSeasons"></app-player-stats>
-<app-achievements *ngIf="showAchievements" [player]="player"></app-achievements>
-<app-player-contact *ngIf="showContact" [player]="player"></app-player-contact>

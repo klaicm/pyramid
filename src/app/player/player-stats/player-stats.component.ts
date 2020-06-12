@@ -79,7 +79,11 @@ export class PlayerStatsComponent implements OnInit {
               value: 4
             }
           },
-          showInLegend: true
+          showInLegend: true,
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '75%'],
+          size: '110%'
         }
       },
       legend: {
@@ -97,6 +101,7 @@ export class PlayerStatsComponent implements OnInit {
       series: [{
         name: 'Ishod',
         colorByPoint: true,
+        innerSize: '50%',
         data: [{
           name: 'Pobjede',
           y: this.percentage,

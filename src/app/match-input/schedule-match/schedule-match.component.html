@@ -1,67 +1,75 @@
-<div class="title-div">
-    <div class="name">
-        <div>
-            Unos novog meča
+<app-spinner *ngIf="(!allPlayers && !allSeasons && !allRounds) || spinnerOn"></app-spinner>
+
+<div *ngIf="(allPlayers && allSeasons && allRounds) && !spinnerOn">
+    <div class="title-div">
+        <div class="name">
+            <div>
+                Unos novog meča
+            </div>
+        </div>
+        <div class="icons">
+            <button mat-icon-button (click)="backToHome()">
+                <mat-icon>home</mat-icon>
+            </button>
         </div>
     </div>
-    <div class="icons">
-        <button mat-icon-button (click)="backToHome()">
-            <mat-icon>home</mat-icon>
+
+    <form [formGroup]="matchFormGroup">
+        <mat-form-field class="setResult">
+            <mat-select placeholder="Kolo" formControlName="roundFormControl">
+                <mat-option *ngFor="let round of allRounds" [value]="round" (click)="getRoundMatches(round)">
+                    {{round.roundDescription}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <section style="margin-top: 16px;">
+            <label id="example-radio-group-label">Izazivači: </label>
+            <mat-radio-group formControlName="challengerOddityFormControl">
+                <mat-radio-button value="even" style="margin-left: 8px;">
+                    Parni red
+                </mat-radio-button>
+                <mat-radio-button value="odd" style="margin-left: 8px;">
+                    Neparni red
+                </mat-radio-button>
+            </mat-radio-group>
+        </section>
+    </form>
+
+    <mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>
+
+    <mat-slide-toggle style="margin-top: 16px;" [(ngModel)]="sameRowMatchAllowed">Susret istog reda:</mat-slide-toggle>
+
+    <form [formGroup]="matchFormGroup">
+        <section style="margin-top: 16px;">
+            <mat-form-field style="width: 45%; margin-right: 16px">
+                <mat-select placeholder="Izazivač" formControlName="playerChallengerFormControl">
+                    <mat-option
+                        *ngFor="let player of (sameRowMatchAllowed ? challengersPlayers.concat(defendersPlayers) : challengersPlayers)"
+                        [value]="player">
+                        ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="width: 45%">
+                <mat-select placeholder="Izazvani" formControlName="playerDefenderFormControl">
+                    <mat-option
+                        *ngFor="let player of (sameRowMatchAllowed ? defendersPlayers.concat(challengersPlayers) : defendersPlayers)"
+                        [value]="player">
+                        ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+    </form>
+
+    <section style="margin-top: 16px;">
+        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()"
+            [disabled]="matchFormGroup.invalid">Unos novog meča
         </button>
-    </div>
+    </section>
+
+    <mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>
+
 </div>
-
-<form [formGroup]="matchFormGroup">
-    <mat-form-field class="setResult">
-        <mat-select placeholder="Kolo" formControlName="roundFormControl">
-            <mat-option *ngFor="let round of allRounds" [value]="round" (click)="getRoundMatches(round)">
-                {{round.roundDescription}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <section style="margin-top: 16px;">
-        <label id="example-radio-group-label">Izazivači: </label>
-        <mat-radio-group formControlName="challengerOddityFormControl">
-            <mat-radio-button value="even" style="margin-left: 8px;">
-                Parni red
-            </mat-radio-button>
-            <mat-radio-button value="odd" style="margin-left: 8px;">
-                Neparni red
-            </mat-radio-button>
-        </mat-radio-group>
-    </section>
-</form>
-
-<mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>
-
-<mat-slide-toggle style="margin-top: 16px;" [(ngModel)]="sameRowMatchAllowed">Dozvoljen susret istog reda: {{sameRowMatchAllowed}}</mat-slide-toggle>
-
-<!--<mat-slide-toggle formControlName="enableSameRowFormControl">Dozvoljen meč igrača istog reda</mat-slide-toggle>-->
-<form [formGroup]="matchFormGroup">
-    <section style="margin-top: 16px;">
-        <mat-form-field style="width: 45%; margin-right: 16px">
-            <mat-select placeholder="Izazivač" formControlName="playerChallengerFormControl">
-                <mat-option *ngFor="let player of (sameRowMatchAllowed ? challengersPlayers.concat(defendersPlayers) : challengersPlayers)" [value]="player">
-                    ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field style="width: 45%">
-            <mat-select placeholder="Izazvani" formControlName="playerDefenderFormControl">
-                <mat-option *ngFor="let player of (sameRowMatchAllowed ? defendersPlayers.concat(challengersPlayers) : defendersPlayers)" [value]="player">
-                    ({{player.playerStats.currentRow}}) {{player.firstName}} {{player.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </section>
-
-    <section style="margin-top: 16px;">
-
-        <button mat-raised-button color="warn" style="margin-right: 8px" (click)="scheduleMatch()">Unos novog meča
-        </button>
-    </section>
-
-</form>
-
-<mat-divider style="margin-top: 16px; margin-bottom: 16px"></mat-divider>

@@ -1,69 +1,74 @@
-<div class="title-div">
-    <div class="name">
-        <div>
-            Unos prijateljskog meča
+<app-spinner *ngIf="spinnerOn"></app-spinner>
+
+<div *ngIf="(friendlyRound && allPlayers) || !spinnerOn">
+    <div class="title-div">
+        <div class="name">
+            <div>
+                Unos prijateljskog meča
+            </div>
+        </div>
+        <div class="icons">
+            <button mat-icon-button (click)="backToHome()">
+                <mat-icon>home</mat-icon>
+            </button>
         </div>
     </div>
-    <div class="icons">
-        <button mat-icon-button (click)="backToHome()">
-            <mat-icon>home</mat-icon>
-        </button>
-    </div>
+
+    <form [formGroup]="matchFormGroup">
+        <section>
+            <mat-form-field class="player-select">
+                <mat-select placeholder="Pobjednik" formControlName="playerWinnerFormControl">
+                    <mat-option *ngFor="let player of allPlayers" [value]="player">
+                        {{player.firstName}} {{player.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="player-select">
+                <mat-select placeholder="Poraženi" formControlName="playerDefeatedFormControl">
+                    <mat-option *ngFor="let player of allPlayers" [value]="player">
+                        {{player.firstName}} {{player.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+        <section>
+            <mat-form-field class="set-result">
+                <mat-select placeholder="1. set" formControlName="firstSetFormControl">
+                    <mat-option *ngFor="let result of allResults" [value]="result">
+                        {{result}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="set-result">
+                <mat-select placeholder="2. set" formControlName="secondSetFormControl">
+                    <mat-option *ngFor="let result of allResults" [value]="result">
+                        {{result}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-result">
+                <input matInput placeholder="" formControlName="thirdSet1FormControl">
+            </mat-form-field>
+            <mat-form-field class="input-result">
+                <input matInput placeholder="" formControlName="thirdSet2FormControl">
+            </mat-form-field>
+        </section>
+
+        <mat-form-field class="date-input">
+            <mat-label>Datum odigravanja</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="matchDateFormControl">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <section>
+            <button mat-raised-button color="primary" style="margin-right: 8px" (click)="saveFriendlyMatch()"
+                [disabled]="matchFormGroup.invalid">Unos prijateljskog
+            </button>
+        </section>
+
+    </form>
 </div>
-
-<form [formGroup]="matchFormGroup">
-    <section>
-        <mat-form-field class="player-select">
-            <mat-select placeholder="Pobjednik" formControlName="playerWinnerFormControl">
-                <mat-option *ngFor="let player of allPlayers" [value]="player">
-                    {{player.firstName}} {{player.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="player-select">
-            <mat-select placeholder="Poraženi" formControlName="playerDefeatedFormControl">
-                <mat-option *ngFor="let player of allPlayers" [value]="player">
-                    {{player.firstName}} {{player.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </section>
-
-    <section>
-        <mat-form-field class="set-result">
-            <mat-select placeholder="1. set" formControlName="firstSetFormControl">
-                <mat-option *ngFor="let result of allResults" [value]="result">
-                    {{result}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="set-result">
-            <mat-select placeholder="2. set" formControlName="secondSetFormControl">
-                <mat-option *ngFor="let result of allResults" [value]="result">
-                    {{result}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="input-result">
-            <input matInput placeholder="" formControlName="thirdSet1FormControl">
-        </mat-form-field>
-        <mat-form-field class="input-result">
-            <input matInput placeholder="" formControlName="thirdSet2FormControl">
-        </mat-form-field>
-    </section>
-
-    <mat-form-field class="date-input">
-        <mat-label>Datum odigravanja</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="matchDateFormControl">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <section>
-        <button mat-raised-button color="primary" style="margin-right: 8px" (click)="saveFriendlyMatch()">Unos prijateljskog
-        </button>
-    </section>
-
-</form>

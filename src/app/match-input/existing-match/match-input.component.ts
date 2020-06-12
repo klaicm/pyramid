@@ -27,16 +27,16 @@ export class MatchInputComponent implements OnInit, OnDestroy {
     responseListener = false;
     isNewMatch = true;
     allPlayers: Array<Player>;
+    spinnerOn = true;
 
     constructor(private matchService: MatchService, private playerService: PlayerService, private location: Location,
         private router: Router, private snackMessageService: SnackMessageService, private activatedRoute: ActivatedRoute) {
         this.matchFormGroup = new FormGroup({
             playerWinnerFormControl: new FormControl('', Validators.required),
-            playerDefeatedFormControl: new FormControl('', Validators.required),
             firstSetFormControl: new FormControl('', Validators.required),
             secondSetFormControl: new FormControl('', Validators.required),
-            thirdSet1FormControl: new FormControl('', Validators.required),
-            thirdSet2FormControl: new FormControl('', Validators.required),
+            thirdSet1FormControl: new FormControl(''),
+            thirdSet2FormControl: new FormControl(''),
             matchDateFormControl: new FormControl('', Validators.required)
         });
     }
@@ -49,11 +49,13 @@ export class MatchInputComponent implements OnInit, OnDestroy {
 
     getMatch(id: number) {
         this.matchService.getMatch(id).subscribe(response => {
+            this.spinnerOn = false;
             this.currentMatch = response;
         });
     }
 
     saveSeasonMatch() {
+        this.spinnerOn = true;
         this.currentMatch.playerWinner = this.matchFormGroup.get('playerWinnerFormControl').value;
         if (this.currentMatch.playerWinner === this.currentMatch.playerRowAttacker) {
             this.currentMatch.playerDefeated = this.currentMatch.playerRowDefender;
@@ -73,27 +75,29 @@ export class MatchInputComponent implements OnInit, OnDestroy {
 
         this.currentMatch.matchDate = this.matchFormGroup.get('matchDateFormControl').value;
 
-        this.matchService.saveMatch(this.currentMatch).subscribe(response => {
-            this.responseListener = true;
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                    this.responseListener = false;
-                } else {
-                    console.log(this.currentMatch);
-                }
-
+        setTimeout(() => {
+            this.matchService.saveMatch(this.currentMatch).subscribe(() => {
+                this.spinnerOn = false;
                 this.snackMessageService.showSuccess('Spremljeno!');
-                this.location.back();
-            }, 1000);
-        });
+                this.backToHome();
+            }, err => {
+                this.snackMessageService.showError('Greška prilikom spremanja!');
+            }
+            );
+        }, 2000);
+
     }
 
     deleteMatch() {
-        this.matchService.deleteMatch(this.currentMatch).subscribe(response => {
+        this.spinnerOn = true;
+        this.matchService.deleteMatch(this.currentMatch).subscribe(() => {
+            this.spinnerOn = false;
             this.snackMessageService.showError('Meč obrisan');
             this.backToHome();
-        });
+        }, err => {
+            this.snackMessageService.showError('Greška prilikom spremanja!');
+        }
+        );
     }
 
     backToHome() {

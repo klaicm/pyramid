@@ -19,6 +19,7 @@ export class RoundComponent implements OnInit {
 
     allSeasons: Array<Season>;
     roundFormGroup: FormGroup;
+    spinnerOn = false;
 
     constructor(private seasonService: SeasonService, private router: Router, private snackMessageService: SnackMessageService,
         private matchService: MatchService) {
@@ -39,6 +40,8 @@ export class RoundComponent implements OnInit {
 
     addNewRound() {
 
+        this.spinnerOn = true;
+
         const round = new Round();
 
         round.roundNumber = this.roundFormGroup.get('roundNumberFormControl').value;
@@ -49,19 +52,18 @@ export class RoundComponent implements OnInit {
             round.roundNumber + '. kolo (' + round.dateFrom.toLocaleDateString().substring(0, 5).replace('/', '.') + '. - '
             + round.dateTo.toLocaleDateString().substring(0, 5).replace('/', '.') + '.) - ' + round.season.seasonName;
 
-        this.matchService.addNewRound(round).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                    console.error('Uspješno spremljeno.');
-                } else {
-                    console.log(round);
-                }
-            }, 1000);
-
+        this.matchService.addNewRound(round).subscribe(() => {
+            this.spinnerOn = false;
             this.snackMessageService.showSuccess('Dodano novo kolo: ' +
                 round.roundNumber + '. kolo (' + round.dateFrom.toLocaleDateString().substring(0, 5).replace('/', '.') + '. - '
                 + round.dateTo.toLocaleDateString().substring(0, 5).replace('/', '.') + '.) - ' + round.season.seasonName);
+
+            this.roundFormGroup.get('roundNumberFormControl').reset();
+            this.roundFormGroup.get('matchDateFromFormControl').reset();
+            this.roundFormGroup.get('matchDateToFormControl').reset();
+            this.backToHome();
+        }, err => {
+            this.snackMessageService.showError('Neuspješno dodavanje!');
         });
     }
 
