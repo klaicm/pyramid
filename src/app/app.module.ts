@@ -17,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { PlayerDetailsComponent } from './player/player-details/player-details.component';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -40,6 +40,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LogoutComponent } from './shared/logout/logout.component';
+import { LoginComponent } from './shared/login/login.component';
+import { BasicAuthHtppInterceptorService } from './shared/auth/basic-http-interceptor.service';
+import { SearchPlayerComponent } from './shared/search/search-player.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -61,7 +65,10 @@ export function highchartsFactory() {
     PlayerContactComponent,
     ModifyPlayerComponent,
     FriendlyMatchComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    LoginComponent,
+    LogoutComponent,
+    SearchPlayerComponent
   ],
   imports: [
     RouterModule.forRoot(routing),
@@ -92,6 +99,9 @@ export function highchartsFactory() {
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true
     }],
   bootstrap: [AppComponent]
 })

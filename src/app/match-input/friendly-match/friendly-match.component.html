@@ -1,18 +1,11 @@
 <app-spinner *ngIf="spinnerOn"></app-spinner>
 
 <div *ngIf="(friendlyRound && allPlayers) || !spinnerOn">
-    <div class="title-div">
-        <div class="name">
-            <div>
-                Unos prijateljskog meča
-            </div>
-        </div>
-        <div class="icons">
-            <button mat-icon-button (click)="backToHome()">
-                <mat-icon>home</mat-icon>
-            </button>
-        </div>
+    <div class="component-name">
+        Unos prijateljskog meča
     </div>
+
+    <mat-divider></mat-divider>
 
     <form [formGroup]="matchFormGroup">
         <section>

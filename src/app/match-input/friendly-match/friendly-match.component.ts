@@ -1,10 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlayerService } from 'src/app/player/player.service';
-import { Subscription } from 'rxjs';
 import { Player } from 'src/app/player/player.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Match } from 'src/app/fixtures/match.model';
-import { Season } from 'src/app/shared/models/season.model';
 import { MatchService } from 'src/app/fixtures/match.service';
 import { Round } from 'src/app/fixtures/round.model';
 import { Location } from '@angular/common';
@@ -16,10 +14,9 @@ import { Router } from '@angular/router';
     templateUrl: './friendly-match.component.html',
     styleUrls: ['./friendly-match.component.css', '../../app.component.css']
 })
-export class FriendlyMatchComponent implements OnInit, OnDestroy {
+export class FriendlyMatchComponent implements OnInit {
 
     allResults: Array<string> = ['6:0', '6:1', '6:2', '6:3', '6:4', '7:5', '7:6', '6:7', '5:7', '4:6', '3:6', '2:6', '1:6', '0:6'];
-    sub: Subscription;
     matchFormGroup: FormGroup;
     friendlyRound: Round;
     allPlayers: Array<Player>;
@@ -74,6 +71,7 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
         this.matchService.saveMatch(newFriendlyMatch).subscribe(() => {
             this.spinnerOn = false;
             this.snackMessageService.showSuccess('Spremljeno!');
+            this.matchFormGroup.reset();
             this.backToHome();
         }, err => {
             this.spinnerOn = false;
@@ -87,7 +85,4 @@ export class FriendlyMatchComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
     }
 
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-    }
 }

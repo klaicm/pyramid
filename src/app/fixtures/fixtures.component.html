@@ -1,38 +1,6 @@
 <app-spinner *ngIf="(!matches && !allRounds) || spinnerOn"></app-spinner>
 
 <div *ngIf="(!matches && !allRounds) || !spinnerOn">
-    <div class="title-div">
-        <div class="name">
-            <div>
-                TK Đakovo - Piramida
-            </div>
-        </div>
-        <div class="icons">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>add_circle</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addNewPlayer()">
-                    <mat-icon>person_add_alt_1</mat-icon>Dodaj novog igrača
-                </button>
-                <button mat-menu-item (click)="modifyPlayer()">
-                    <mat-icon>edit</mat-icon>Izmjena podataka igrača
-                </button>
-                <button mat-menu-item (click)="navigateToScheduleMatch()">
-                    <mat-icon>playlist_add</mat-icon>Dodaj nove mečeve
-                </button>
-                <button mat-menu-item (click)="navigateToRoundInput()">
-                    <mat-icon>plus_one</mat-icon>Dodaj novo kolo
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>post_add</mat-icon>Dodaj novu sezonu
-                </button>
-            </mat-menu>
-            <button mat-icon-button>
-                <mat-icon>person_search</mat-icon>
-            </button>
-        </div>
-    </div>
 
     <mat-form-field class="roundSelect">
         <mat-select placeholder="Odaberi kolo" [compareWith]="compareObjects" [(ngModel)]="currentRound">

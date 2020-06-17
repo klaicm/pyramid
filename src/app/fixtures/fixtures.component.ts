@@ -7,6 +7,7 @@ import { MatchService } from 'src/app/fixtures/match.service';
 import { Match } from 'src/app/fixtures/match.model';
 import { Round } from 'src/app/fixtures/round.model';
 import { SnackMessageService } from '../shared/services/snackbar-message.service';
+import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
     selector: 'app-fixtures',
@@ -22,7 +23,8 @@ export class FixturesComponent implements OnInit {
     currentRound: Round;
     spinnerOn = false;
 
-    constructor(private matchService: MatchService, private router: Router, private snackbarMessageService: SnackMessageService) { }
+    constructor(private matchService: MatchService, private router: Router, private snackbarMessageService: SnackMessageService,
+        private authService: AuthService) { }
 
     ngOnInit() {
 
@@ -73,23 +75,7 @@ export class FixturesComponent implements OnInit {
     }
 
     navigateToMatchInput(match: Match) {
-        // this.matchService.setCurrentMatch(match);
         this.router.navigate(['/match-input', match.id]);
     }
 
-    navigateToRoundInput() {
-        this.router.navigate(['/round-input']);
-    }
-
-    addNewPlayer() {
-        this.router.navigate(['/add-player']);
-    }
-
-    modifyPlayer() {
-        this.router.navigate(['/modify-player']);
-    }
-
-    navigateToScheduleMatch() {
-        this.router.navigate(['/schedule-match']);
-    }
 }

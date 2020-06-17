@@ -1,0 +1,23 @@
+<div class="component-name">
+    Prijava
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="container">
+    <section>
+        <mat-form-field class="input-result">
+            <input type="text" matInput placeholder="username" [(ngModel)]="username">
+        </mat-form-field>
+    </section>
+    <section>
+        <mat-form-field class="input-result">
+            <input type="password" matInput placeholder="password" [(ngModel)]="password">
+        </mat-form-field>
+    </section>
+    <section>
+        <button mat-raised-button color="primary" style="margin-right: 8px" (click)="checkLogin()">
+            Login
+        </button>
+    </section>
+</div>

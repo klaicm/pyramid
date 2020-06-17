@@ -1,66 +1,60 @@
-<div class="title-div">
-        <div class="name">
-            <div>
-                Izmjena podataka igrača
-            </div>
-        </div>
-        <div class="icons">
-            <button mat-icon-button (click)="backToHome()">
-                <mat-icon>home</mat-icon>
-            </button>
-        </div>
-    </div>
+<div class="component-name">
+    Izmjena podataka igrača
+</div>
 
-    <mat-form-field>
-        <mat-select placeholder="Odaberi igrača">
-            <mat-option *ngFor="let player of allPlayers" (click)="getPlayer(player)">
-                {{player.firstName}} {{player.lastName}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-    <form [formGroup]="playerFormGroup">
-        <section>
-            <mat-form-field style="margin-right: 16px">
-                <mat-label>Ime</mat-label>
-                <input matInput formControlName="firstNameFormControl">
-            </mat-form-field>
-    
-            <mat-form-field style="margin-right: 16px">
-                <mat-label>Prezime</mat-label>
-                <input matInput formControlName="lastNameFormControl">
-            </mat-form-field>
-        </section>
-    
-        <section>
-            <mat-form-field style="margin-right: 16px">
-                <mat-label>E-mail</mat-label>
-                <input matInput formControlName="userMailFormControl">
-            </mat-form-field>
-    
-            <mat-form-field style="margin-right: 16px">
-                <mat-label>Broj mobitela</mat-label>
-                <input matInput formControlName="phoneNumberFormControl">
-            </mat-form-field>
-        </section>
-    
-        <section>
-            <mat-form-field style="margin-right: 16px">
-                <mat-label>Red</mat-label>
-                <input matInput formControlName="rowFormControl">
-            </mat-form-field>
-            
-        </section>
-    
-        <p style="margin-top: 16px">Aktivan: </p>
-        <section style="text-align: left; margin-top: 8px;">
-            <mat-radio-group aria-label="Aktivan" formControlName="isActiveFormControl">
-                <mat-radio-button style="margin-right: 16px" [value]="true">DA</mat-radio-button>
-                <mat-radio-button [value]="false">NE</mat-radio-button>
-            </mat-radio-group>
-        </section>
-    
-    
-        <button mat-raised-button color="primary" style="margin-right: 8px; margin-top: 16px" (click)="savePlayer()">Spremi</button>
-    
-    </form>
+<mat-divider></mat-divider>
+
+<mat-form-field>
+    <mat-select placeholder="Odaberi igrača">
+        <mat-option *ngFor="let player of allPlayers" (click)="getPlayer(player)">
+            {{player.firstName}} {{player.lastName}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<form [formGroup]="playerFormGroup">
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Ime</mat-label>
+            <input matInput formControlName="firstNameFormControl">
+        </mat-form-field>
+
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Prezime</mat-label>
+            <input matInput formControlName="lastNameFormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="userMailFormControl">
+        </mat-form-field>
+
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Broj mobitela</mat-label>
+            <input matInput formControlName="phoneNumberFormControl">
+        </mat-form-field>
+    </section>
+
+    <section>
+        <mat-form-field style="margin-right: 16px">
+            <mat-label>Red</mat-label>
+            <input matInput formControlName="rowFormControl">
+        </mat-form-field>
+
+    </section>
+
+    <p style="margin-top: 16px">Aktivan: </p>
+    <section style="text-align: left; margin-top: 8px;">
+        <mat-radio-group aria-label="Aktivan" formControlName="isActiveFormControl">
+            <mat-radio-button style="margin-right: 16px" [value]="true">DA</mat-radio-button>
+            <mat-radio-button [value]="false">NE</mat-radio-button>
+        </mat-radio-group>
+    </section>
+
+
+    <button mat-raised-button color="primary" style="margin-right: 8px; margin-top: 16px"
+        (click)="savePlayer()">Spremi</button>
+
+</form>

@@ -1,18 +1,11 @@
 <app-spinner *ngIf="!allSeasons || spinnerOn"></app-spinner>
 
 <div *ngIf="allSeasons && !spinnerOn">
-    <div class="title-div">
-        <div class="name">
-            <div>
-                Unos novog kola
-            </div>
-        </div>
-        <div class="icons">
-            <button mat-icon-button (click)="backToHome()">
-                <mat-icon>home</mat-icon>
-            </button>
-        </div>
+    <div class="component-name">
+        Unos novog kola
     </div>
+
+    <mat-divider></mat-divider>
 
     <form [formGroup]="roundFormGroup">
 

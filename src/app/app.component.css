@@ -12,13 +12,13 @@
 .name {
     display: inline-block;
     text-align: left;
-    width: 60%;
+    width: 50%;
 }
 
 .icons {
     display: inline-block;
     text-align: right;
-    width: 40%;
+    width: 50%;
 }
 
 .set-result {
@@ -38,4 +38,10 @@
 .date-input {
     margin: 8px;
     width: 120px;
+}
+
+.component-name {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: 500;
 }

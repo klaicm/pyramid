@@ -1,5 +1,51 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<div class="title-div">
+  <div class="name">
+    <div>
+      TK Đakovo - Piramida
+    </div>
+  </div>
+  <div class="icons">
+    <button mat-icon-button [matMenuTriggerFor]="adminMenu" *ngIf="authService.isUserLoggedIn()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+    <mat-menu #adminMenu="matMenu">
+      <button mat-menu-item (click)="addNewPlayer()">
+        <mat-icon>person_add_alt_1</mat-icon>Dodaj novog igrača
+      </button>
+      <button mat-menu-item (click)="modifyPlayer()">
+        <mat-icon>edit</mat-icon>Izmjena podataka igrača
+      </button>
+      <button mat-menu-item (click)="navigateToScheduleMatch()">
+        <mat-icon>playlist_add</mat-icon>Dodaj nove mečeve
+      </button>
+      <button mat-menu-item (click)="navigateToRoundInput()">
+        <mat-icon>plus_one</mat-icon>Dodaj novo kolo
+      </button>
+      <button mat-menu-item>
+        <mat-icon>post_add</mat-icon>Dodaj novu sezonu
+      </button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="authService.isUserLoggedIn()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="backToHome()">
+        <mat-icon>home</mat-icon>Pregled kola
+      </button>
+      <button mat-menu-item (click)="searchPlayer()">
+        <mat-icon>person_search</mat-icon>Pretraži igrače
+      </button>
+      <button mat-menu-item *ngIf="!authService.isUserLoggedIn()" (click)="navigateToLogin()">
+        <mat-icon>login</mat-icon>Prijava
+      </button>
+      <button mat-menu-item *ngIf="authService.isUserLoggedIn()" (click)="navigateToLogout()">
+        <mat-icon>power_settings_new</mat-icon>Odjava
+      </button>
+    </mat-menu>
+  </div>
+</div>
 <div style="margin-bottom: 16px">
   <router-outlet></router-outlet>
 </div>
-

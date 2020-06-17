@@ -1,18 +1,12 @@
 <app-spinner *ngIf="loadingPlayer"></app-spinner>
 
 <div *ngIf="!loadingPlayer">
-  <div class="title-div">
-    <div class="name">
-      <div>
-        {{ player?.firstName + ' ' + player?.lastName }}
-      </div>
-    </div>
-    <div class="icons">
-      <button mat-icon-button (click)="backToHome()">
-        <mat-icon>home</mat-icon>
-      </button>
-    </div>
+
+  <div class="component-name">
+    {{ player?.firstName + ' ' + player?.lastName }}
   </div>
+
+  <mat-divider></mat-divider>
 
   <mat-tab-group *ngIf="player && playerMatches && allSeasons">
 

@@ -9,18 +9,25 @@ import { PlayerContactComponent } from 'src/app/player/player-contact/player-con
 import { ModifyPlayerComponent } from 'src/app/player/modify-player/modify-player.component';
 import { MatchInputComponent } from 'src/app/match-input/existing-match/match-input.component';
 import { FriendlyMatchComponent } from 'src/app/match-input/friendly-match/friendly-match.component';
+import { LoginComponent } from './shared/login/login.component';
+import { LogoutComponent } from './shared/logout/logout.component';
+import { AuthGuardService } from './shared/auth/auth-guard.service';
+import { SearchPlayerComponent } from './shared/search/search-player.component';
 
 /**
  * Main app router and routes
  * @type {Routes}
  */
 export const routing: Routes = [
-    { path: '', component: FixturesComponent, },
-    { path: 'player/:id', component: PlayerComponent },
-    { path: 'match-input/:id', component: MatchInputComponent },
-    { path: 'schedule-match', component: ScheduleMatchComponent },
-    { path: 'add-player', component: AddPlayerComponent },
-    { path: 'round-input', component: RoundComponent },
-    { path: 'modify-player', component: ModifyPlayerComponent },
-    { path: 'friendly-match', component: FriendlyMatchComponent }
+    { path: '', component: FixturesComponent },
+    { path: 'player/:id', component: PlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'match-input/:id', component: MatchInputComponent, canActivate: [ AuthGuardService ] },
+    { path: 'schedule-match', component: ScheduleMatchComponent, canActivate: [ AuthGuardService ] },
+    { path: 'add-player', component: AddPlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'round-input', component: RoundComponent, canActivate: [ AuthGuardService ] },
+    { path: 'modify-player', component: ModifyPlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'friendly-match', component: FriendlyMatchComponent, canActivate: [ AuthGuardService ] },
+    { path: 'login', component: LoginComponent },
+    { path: 'logout', component: LogoutComponent },
+    { path: 'search-player', component: SearchPlayerComponent, canActivate: [ AuthGuardService ] }
 ];

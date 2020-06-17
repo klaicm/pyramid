@@ -1,0 +1,17 @@
+<div class="component-name">
+    Pretraživanje igrača
+</div>
+
+<mat-divider></mat-divider>
+
+<form>
+    <mat-form-field class="input-headline" *ngIf="allPlayers">
+        <input type="text" placeholder="Traži igrača" aria-label="Number" matInput [formControl]="playerFormControl"
+            [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let player of filteredOptions | async" [value]="player" (click)="navigateToPlayer(player)">
+                {{player.firstName}} {{ player.lastName}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

@@ -59,10 +59,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  backToHome() {
-    this.router.navigate(['/']);
-  }
-
   getPlayerMatches(playerId: number) {
     this.matchService.getPlayerMatches(playerId).subscribe(response => {
       this.playerMatches = response;
