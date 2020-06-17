@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Season } from 'src/app/shared/models/season.model';
 import { Match } from 'src/app/fixtures/match.model';
+import { Round } from 'src/app/fixtures/round.model';
 
 @Component({
   selector: 'app-player-stats',
@@ -52,11 +53,32 @@ export class PlayerStatsComponent implements OnInit {
     this.playerWins = playerSeasonMatches.filter((match: Match) => match.playerWinner.id === this.player.id).length;
     this.playerLoses = playerSeasonMatches.filter((match: Match) => match.playerDefeated.id === this.player.id).length;
 
+    const playerRowsThroughSeason = [];
+    if (this.currentSeason.seasonTier === 'pyramid') {
+      playerSeasonMatches.sort((a: Match, b: Match) => a.round.roundNumber > b.round.roundNumber ? 1 : -1);
+      seasonRounds.sort((a: Round, b: Round) => a.roundNumber > b.roundNumber ? 1 : -1);
+      for (let k = 0; k < seasonRounds.length; k++) {
+        if (playerSeasonMatches.findIndex((a: Match) => a.round.id === seasonRounds[k].id) !== -1) {
+          for (let z = 0; z < playerSeasonMatches.length; z++) {
+            if (seasonRounds[k].roundNumber === playerSeasonMatches[z].round.roundNumber) {
+              if (playerSeasonMatches[z].playerRowAttacker.id === this.player.id) {
+                playerRowsThroughSeason.push(playerSeasonMatches[z].challengerRow);
+              } else {
+                playerRowsThroughSeason.push(playerSeasonMatches[z].defenderRow);
+              }
+            }
+          }
+        } else {
+          playerRowsThroughSeason.push(0);
+        }
+      }
+    }
+
     this.percentage = (this.playerWins / (this.playerWins + this.playerLoses)) * 100;
-    this.winPercentagePieChart(this.player);
+    this.winPercentagePieChart(playerRowsThroughSeason);
   }
 
-  winPercentagePieChart(player: Player): void {
+  winPercentagePieChart(playerRoundsThroughSeason: number[]): void {
     this.winPercentage = {
       chart: {
         plotBackgroundColor: null,
@@ -141,13 +163,17 @@ export class PlayerStatsComponent implements OnInit {
       },
       xAxis: {
         allowDecimals: false,
-        min: 1
+        min: 1,
+        title: {
+          text: 'Kolo'
+        }
       },
       series: [{
         name: 'Red',
         type: 'column',
         color: '#483D8B',
-        data: [2, 1, 2, 3, 4, 3],
+        data: playerRoundsThroughSeason,
+        pointStart: 1
       }]
     };
   }

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="icons">
-    <button mat-icon-button [matMenuTriggerFor]="adminMenu" *ngIf="authService.isUserLoggedIn()">
+    <button mat-icon-button [matMenuTriggerFor]="adminMenu" *ngIf="authService.isUserAdmin()">
       <mat-icon>add_circle</mat-icon>
     </button>
     <mat-menu #adminMenu="matMenu">
@@ -27,14 +27,14 @@
       </button>
     </mat-menu>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="authService.isUserLoggedIn()">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="backToHome()">
         <mat-icon>home</mat-icon>Pregled kola
       </button>
-      <button mat-menu-item (click)="searchPlayer()">
+      <button mat-menu-item *ngIf="authService.isUserLoggedIn()" (click)="searchPlayer()">
         <mat-icon>person_search</mat-icon>Pretraži igrače
       </button>
       <button mat-menu-item *ngIf="!authService.isUserLoggedIn()" (click)="navigateToLogin()">

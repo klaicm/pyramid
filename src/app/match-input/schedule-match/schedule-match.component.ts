@@ -118,6 +118,11 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
                 this.challengersPlayers.splice(this.challengersPlayers.findIndex((a: Player) => a === match.playerRowAttacker), 1);
                 this.defendersPlayers.splice(this.defendersPlayers.findIndex((a: Player) => a === match.playerRowDefender), 1);
 
+                if (this.sameRowMatchAllowed) {
+                    this.challengersPlayers.splice(this.challengersPlayers.findIndex((a: Player) => a === match.playerRowDefender), 1);
+                    this.defendersPlayers.splice(this.defendersPlayers.findIndex((a: Player) => a === match.playerRowAttacker), 1);
+                }
+
                 this.snackMessageService.showSuccess('Unesen novi meč: ' +
                     match.playerRowAttacker.firstName + ' ' + match.playerRowAttacker.lastName +
                     ' : ' + match.playerRowDefender.firstName + ' ' + match.playerRowDefender.lastName);
@@ -131,7 +136,7 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
                     this.snackMessageService.showError('Neuspješan unos.');
                 }
             );
-        }, 1000);
+        }, 500);
 
 
     }

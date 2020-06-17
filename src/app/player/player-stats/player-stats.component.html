@@ -60,11 +60,11 @@
   </tr>
 </table>
 
-<div>
+<div *ngIf="currentSeason.seasonTier === 'pyramid'">
   <chart [options]="rowsColumn"> </chart>
 </div>
 
-<mat-divider></mat-divider>
+<mat-divider style="margin-top: 8px"></mat-divider>
 
 <table>
   <tr>

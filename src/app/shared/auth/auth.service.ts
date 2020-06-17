@@ -31,6 +31,11 @@ export class AuthService {
         return !(user === null);
     }
 
+    isUserAdmin() {
+        const user = sessionStorage.getItem('username');
+        return !(user === null && user !== 'admin');
+    }
+
     logOut() {
         sessionStorage.removeItem('username');
     }

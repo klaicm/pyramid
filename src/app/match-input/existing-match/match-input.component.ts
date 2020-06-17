@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { SnackMessageService } from 'src/app/shared/services/snackbar-message.service';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class MatchInputComponent implements OnInit, OnDestroy {
     spinnerOn = true;
 
     constructor(private matchService: MatchService, private playerService: PlayerService, private location: Location,
-        private router: Router, private snackMessageService: SnackMessageService, private activatedRoute: ActivatedRoute) {
+        private router: Router, private snackMessageService: SnackMessageService, private activatedRoute: ActivatedRoute,
+        private authService: AuthService) {
         this.matchFormGroup = new FormGroup({
             playerWinnerFormControl: new FormControl('', Validators.required),
             firstSetFormControl: new FormControl('', Validators.required),

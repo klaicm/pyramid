@@ -27,8 +27,8 @@
                         [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">
                         - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}</a>
                 </div>
-                <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;">
-                    <a class="res-input" *ngIf="!match.matchPlayed" (click)="navigateToMatchInput(match)">Unos</a>
+                <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;" *ngIf="authService.isUserLoggedIn()">
+                    <a class="res-input" *ngIf="!match.matchPlayed || authService.isUserAdmin()" (click)="navigateToMatchInput(match)">Unos</a>
                 </div>
             </div>
             <div style="border-bottom: 1px solid lightgray">

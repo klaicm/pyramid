@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { SnackMessageService } from '../services/snackbar-message.service';
 
 @Component({
     selector: 'app-login',
@@ -13,8 +14,7 @@ export class LoginComponent implements OnInit {
     password = '';
     invalidLogin = false;
 
-    constructor(private router: Router,
-        private authService: AuthService) { }
+    constructor(private router: Router, private authService: AuthService, private snackMessageService: SnackMessageService) { }
 
     ngOnInit() {
     }
@@ -24,10 +24,11 @@ export class LoginComponent implements OnInit {
             data => {
                 this.router.navigate(['']);
                 this.invalidLogin = false;
+                this.snackMessageService.showSuccess('Uspješna prijava.');
             },
             error => {
                 this.invalidLogin = true;
-
+                this.snackMessageService.showError('Netočni podaci za prijavu.');
             }));
     }
 
