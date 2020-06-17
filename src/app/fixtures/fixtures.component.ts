@@ -70,6 +70,10 @@ export class FixturesComponent implements OnInit {
         }
     }
 
+    get isUserLoggedIn() {
+        return this.authService.isUserLoggedIn();
+      }
+
     compareObjects(o1: any, o2: any): boolean {
         return o1.id === o2.id;
     }

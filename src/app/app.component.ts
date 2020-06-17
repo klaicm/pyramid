@@ -12,6 +12,14 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  get isUserLoggedIn() {
+    return this.authService.isUserLoggedIn();
+  }
+
+  get isUserAdmin() {
+    return this.authService.isUserAdmin();
+  }
+
   navigateToRoundInput() {
     this.router.navigate(['/round-input']);
   }

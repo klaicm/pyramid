@@ -56,7 +56,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
           console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
         }
       });
-    }, 1000);
+    }, 500);
   }
 
   getPlayerMatches(playerId: number) {
