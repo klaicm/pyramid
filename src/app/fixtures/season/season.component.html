@@ -1,0 +1,44 @@
+<app-spinner *ngIf="spinnerOn"></app-spinner>
+
+<div *ngIf="!spinnerOn">
+    <div class="component-name">
+        Unos nove sezone (Novog natjecanja)
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="seasonFormGroup" style="margin-top: 8px">
+
+        <mat-form-field>
+            <mat-select placeholder="Vrsta natjecanja" formControlName="seasonTierFormControl">
+                <mat-option *ngFor="let tier of tiers" [value]="tier">
+                    {{tier.tierName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Period" formControlName="periodFormControl">
+                <mat-option *ngFor="let period of periods" [value]="period">
+                    {{period}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Godina" formControlName="yearFormControl">
+        </mat-form-field>
+
+        <p style="margin-top: 8px">Trenutna sezona: </p>
+        <section style="text-align: left; margin-top: 8px; margin-bottom: 8px;">
+            <mat-radio-group aria-label="Aktivna" formControlName="isCurrentSeasonFormControl">
+                <mat-radio-button style="margin-right: 16px" [value]="true">DA</mat-radio-button>
+                <mat-radio-button [value]="false">NE</mat-radio-button>
+            </mat-radio-group>
+        </section>
+
+        <button mat-raised-button color="primary" style="margin-right: 8px" (click)="addNewSeason()"
+            [disabled]="seasonFormGroup.invalid">Unos nove sezone</button>
+
+    </form>
+</div>

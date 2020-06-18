@@ -13,6 +13,7 @@ import { LoginComponent } from './shared/login/login.component';
 import { LogoutComponent } from './shared/logout/logout.component';
 import { AuthGuardService } from './shared/auth/auth-guard.service';
 import { SearchPlayerComponent } from './shared/search/search-player.component';
+import { SeasonComponent } from './fixtures/season/season.component';
 
 /**
  * Main app router and routes
@@ -29,5 +30,6 @@ export const routing: Routes = [
     { path: 'friendly-match', component: FriendlyMatchComponent, canActivate: [ AuthGuardService ] },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
-    { path: 'search-player', component: SearchPlayerComponent, canActivate: [ AuthGuardService ] }
+    { path: 'search-player', component: SearchPlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'season-input', component: SeasonComponent, canActivate: [ AuthGuardService ] }
 ];

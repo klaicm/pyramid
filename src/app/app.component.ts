@@ -24,6 +24,10 @@ export class AppComponent {
     this.router.navigate(['/round-input']);
   }
 
+  navigateToSeasonInput() {
+    this.router.navigate(['/season-input']);
+  }
+
   addNewPlayer() {
     this.router.navigate(['/add-player']);
   }

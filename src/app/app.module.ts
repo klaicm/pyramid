@@ -21,7 +21,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
 import { ScheduleMatchComponent } from 'src/app/match-input/schedule-match/schedule-match.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
@@ -44,6 +44,8 @@ import { LogoutComponent } from './shared/logout/logout.component';
 import { LoginComponent } from './shared/login/login.component';
 import { BasicAuthHtppInterceptorService } from './shared/auth/basic-http-interceptor.service';
 import { SearchPlayerComponent } from './shared/search/search-player.component';
+import { CustomDateAdapter } from './shared/util/custom-date-adapter';
+import { SeasonComponent } from './fixtures/season/season.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -68,7 +70,8 @@ export function highchartsFactory() {
     SpinnerComponent,
     LoginComponent,
     LogoutComponent,
-    SearchPlayerComponent
+    SearchPlayerComponent,
+    SeasonComponent
   ],
   imports: [
     RouterModule.forRoot(routing),
@@ -102,7 +105,10 @@ export function highchartsFactory() {
     },
     {
       provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true
-    }],
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'hr-HR' },
+    { provide: DateAdapter, useClass: CustomDateAdapter }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -30,8 +30,12 @@ export class FriendlyMatchComponent implements OnInit {
             playerDefeatedFormControl: new FormControl('', Validators.required),
             firstSetFormControl: new FormControl('', Validators.required),
             secondSetFormControl: new FormControl('', Validators.required),
-            thirdSet1FormControl: new FormControl(''),
-            thirdSet2FormControl: new FormControl(''),
+            thirdSet1FormControl: new FormControl('', [
+                Validators.pattern('^[0-9]*$'), Validators.maxLength(2)
+            ]),
+            thirdSet2FormControl: new FormControl('', [
+                Validators.pattern('^[0-9]*$'), Validators.maxLength(2)
+            ]),
             matchDateFormControl: new FormControl('', Validators.required)
         });
     }

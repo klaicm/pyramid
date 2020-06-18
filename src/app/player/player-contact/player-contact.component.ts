@@ -11,4 +11,12 @@ import { Player } from 'src/app/player/player.model';
 
     @Input() player: Player;
 
+    callOnPhone() {
+      location.href = 'tel:' + this.player.phoneNumber;
+   }
+
+    sendEmail() {
+      location.href = 'mailto:' + this.player.userMail;
+   }
+
   }

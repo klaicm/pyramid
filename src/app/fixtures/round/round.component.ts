@@ -8,8 +8,6 @@ import { OnInit } from '@angular/core';
 import { Round } from 'src/app/fixtures/round.model';
 import { MatchService } from 'src/app/fixtures/match.service';
 
-
-
 @Component({
     selector: 'app-round',
     templateUrl: './round.component.html',
@@ -26,9 +24,11 @@ export class RoundComponent implements OnInit {
 
         this.roundFormGroup = new FormGroup({
             seasonFormControl: new FormControl('', Validators.required),
-            roundNumberFormControl: new FormControl('', Validators.required),
-            matchDateFromFormControl: new FormControl('', Validators.required),
-            matchDateToFormControl: new FormControl('', Validators.required)
+            roundNumberFormControl: new FormControl('', [Validators.required,
+                Validators.pattern('^[0-9]*$'),
+                Validators.maxLength(2)]),
+            roundDateFromFormControl: new FormControl('', Validators.required),
+            roundDateToFormControl: new FormControl('', Validators.required)
         });
     }
 
@@ -45,18 +45,19 @@ export class RoundComponent implements OnInit {
         const round = new Round();
 
         round.roundNumber = this.roundFormGroup.get('roundNumberFormControl').value;
-        round.dateFrom = this.roundFormGroup.get('matchDateFromFormControl').value;
-        round.dateTo = this.roundFormGroup.get('matchDateToFormControl').value;
+        round.dateFrom = this.roundFormGroup.get('roundDateFromFormControl').value;
+        round.dateTo = this.roundFormGroup.get('roundDateToFormControl').value;
         round.season = this.roundFormGroup.get('seasonFormControl').value;
         round.roundDescription =
-            round.roundNumber + '. kolo (' + round.dateFrom.toLocaleDateString().substring(0, 5).replace('/', '.') + '. - '
-            + round.dateTo.toLocaleDateString().substring(0, 5).replace('/', '.') + '.) - ' + round.season.seasonName;
+            round.roundNumber + '. kolo (' +
+            round.dateFrom.toLocaleDateString('hr-HR').slice(0, 7) + ' - '
+            + round.dateTo.toLocaleDateString('hr-HR').slice(0, 7) + ') - ' +
+            round.season.seasonName;
 
         this.matchService.addNewRound(round).subscribe(() => {
             this.spinnerOn = false;
             this.snackMessageService.showSuccess('Dodano novo kolo: ' +
-                round.roundNumber + '. kolo (' + round.dateFrom.toLocaleDateString().substring(0, 5).replace('/', '.') + '. - '
-                + round.dateTo.toLocaleDateString().substring(0, 5).replace('/', '.') + '.) - ' + round.season.seasonName);
+                round.roundDescription);
 
             this.roundFormGroup.get('roundNumberFormControl').reset();
             this.roundFormGroup.get('matchDateFromFormControl').reset();

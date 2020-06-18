@@ -26,15 +26,15 @@
         <section>
             <mat-form-field style="width: 40%; margin-right: 16px">
                 <mat-label>Datum od</mat-label>
-                <input matInput [matDatepicker]="pickerFrom" formControlName="matchDateFromFormControl">
+                <input matInput [matDatepicker]="pickerFrom" formControlName="roundDateFromFormControl">
                 <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFrom></mat-datepicker>
+                <mat-datepicker touchUi #pickerFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field style="width: 40%">
                 <mat-label>Datum do</mat-label>
-                <input matInput [matDatepicker]="pickerTo" formControlName="matchDateToFormControl">
+                <input matInput [matDatepicker]="pickerTo" formControlName="roundDateToFormControl">
                 <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
+                <mat-datepicker touchUi #pickerTo></mat-datepicker>
             </mat-form-field>
         </section>
 

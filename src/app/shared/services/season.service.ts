@@ -12,6 +12,7 @@ export class SeasonService {
 
     private static ALL_SEASONS_URL = environment.url + '/allSeasons';
     private static SEASON_URL = environment.url + '/season';
+    private static SAVE_SEASON_URL = environment.url + '/addSeason';
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +22,10 @@ export class SeasonService {
 
   getSeason(seasonId: number): Observable<any> {
     return this.http.get(`${SeasonService.SEASON_URL}/${seasonId}`);
+  }
+
+  saveSeason(season: Season): Observable<any> {
+    return this.http.post(SeasonService.SAVE_SEASON_URL, season);
   }
 
 }
