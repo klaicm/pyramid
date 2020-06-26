@@ -21,15 +21,15 @@ import { SeasonComponent } from './fixtures/season/season.component';
  */
 export const routing: Routes = [
     { path: '', component: FixturesComponent },
-    { path: 'player/:id', component: PlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'player/:id', component: PlayerComponent },
     { path: 'match-input/:id', component: MatchInputComponent, canActivate: [ AuthGuardService ] },
     { path: 'schedule-match', component: ScheduleMatchComponent, canActivate: [ AuthGuardService ] },
     { path: 'add-player', component: AddPlayerComponent, canActivate: [ AuthGuardService ] },
     { path: 'round-input', component: RoundComponent, canActivate: [ AuthGuardService ] },
     { path: 'modify-player', component: ModifyPlayerComponent, canActivate: [ AuthGuardService ] },
-    { path: 'friendly-match', component: FriendlyMatchComponent, canActivate: [ AuthGuardService ] },
+    { path: 'friendly-match', component: FriendlyMatchComponent },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
-    { path: 'search-player', component: SearchPlayerComponent, canActivate: [ AuthGuardService ] },
+    { path: 'search-player', component: SearchPlayerComponent },
     { path: 'season-input', component: SeasonComponent, canActivate: [ AuthGuardService ] }
 ];

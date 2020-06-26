@@ -34,7 +34,7 @@
       <button mat-menu-item (click)="backToHome()">
         <mat-icon>home</mat-icon>Pregled kola
       </button>
-      <button mat-menu-item *ngIf="isUserLoggedIn" (click)="searchPlayer()">
+      <button mat-menu-item (click)="searchPlayer()">
         <mat-icon>person_search</mat-icon>Pretraži igrače
       </button>
       <button mat-menu-item *ngIf="!isUserLoggedIn" (click)="navigateToLogin()">

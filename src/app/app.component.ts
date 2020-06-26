@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './shared/auth/auth.service';
 
@@ -7,10 +7,15 @@ import { AuthService } from './shared/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterContentChecked {
+
   title = 'pyramid-front';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private changeDetector: ChangeDetectorRef) { }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
 
   get isUserLoggedIn() {
     return this.authService.isUserLoggedIn();
