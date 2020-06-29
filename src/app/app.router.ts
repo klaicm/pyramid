@@ -14,6 +14,7 @@ import { LogoutComponent } from './shared/logout/logout.component';
 import { AuthGuardService } from './shared/auth/auth-guard.service';
 import { SearchPlayerComponent } from './shared/search/search-player.component';
 import { SeasonComponent } from './fixtures/season/season.component';
+import { AllPlayersComponent } from './player/modify-player/all-players.component';
 
 /**
  * Main app router and routes
@@ -31,5 +32,6 @@ export const routing: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'search-player', component: SearchPlayerComponent },
-    { path: 'season-input', component: SeasonComponent, canActivate: [ AuthGuardService ] }
+    { path: 'season-input', component: SeasonComponent, canActivate: [ AuthGuardService ] },
+    { path: 'all-players', component: AllPlayersComponent, canActivate: [ AuthGuardService ] }
 ];

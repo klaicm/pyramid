@@ -45,8 +45,8 @@ export class ScheduleMatchComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
-        this.playerService.getAllPlayers().subscribe(response => {
-            this.allPlayers = response;
+        this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+            this.allPlayers = response.filter(player => player.active);
 
         });
 

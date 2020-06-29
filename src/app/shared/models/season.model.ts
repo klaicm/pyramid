@@ -1,4 +1,4 @@
-import { Round } from "src/app/fixtures/round.model";
+import { Round } from 'src/app/fixtures/round.model';
 
 
 export class Season {

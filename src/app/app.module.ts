@@ -46,6 +46,7 @@ import { BasicAuthHtppInterceptorService } from './shared/auth/basic-http-interc
 import { SearchPlayerComponent } from './shared/search/search-player.component';
 import { CustomDateAdapter } from './shared/util/custom-date-adapter';
 import { SeasonComponent } from './fixtures/season/season.component';
+import { AllPlayersComponent } from './player/modify-player/all-players.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts');
@@ -71,7 +72,8 @@ export function highchartsFactory() {
     LoginComponent,
     LogoutComponent,
     SearchPlayerComponent,
-    SeasonComponent
+    SeasonComponent,
+    AllPlayersComponent
   ],
   imports: [
     RouterModule.forRoot(routing),

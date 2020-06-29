@@ -38,7 +38,7 @@ export class AppComponent implements AfterContentChecked {
   }
 
   modifyPlayer() {
-    this.router.navigate(['/modify-player']);
+    this.router.navigate(['/all-players']);
   }
 
   navigateToScheduleMatch() {

@@ -1,4 +1,4 @@
-import { Season } from "src/app/shared/models/season.model";
+import { Season } from 'src/app/shared/models/season.model';
 
 export class Round {
 

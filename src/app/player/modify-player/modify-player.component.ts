@@ -1,9 +1,10 @@
 import { Player } from 'src/app/player/player.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PlayerService } from 'src/app/player/player.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { SnackMessageService } from 'src/app/shared/services/snackbar-message.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'app-modify-player',
@@ -14,9 +15,10 @@ export class ModifyPlayerComponent implements OnInit {
 
     allPlayers: Array<Player>;
     playerFormGroup: FormGroup;
-    currentPlayer: Player;
+    spinnerOn = false;
 
-    constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService, private router: Router) {
+    constructor(private playerService: PlayerService, public dialogRef: MatDialogRef<ModifyPlayerComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: Player, private snackMessageService: SnackMessageService) {
         this.playerFormGroup = new FormGroup({
             firstNameFormControl: new FormControl('', Validators.required),
             lastNameFormControl: new FormControl('', Validators.required),
@@ -28,50 +30,42 @@ export class ModifyPlayerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.playerService.getAllPlayers().subscribe(response => {
-            this.allPlayers = response;
-        });
-    }
 
-    getPlayer(player: Player) {
-        this.playerService.getPlayer(player.id).subscribe(response => {
-            this.currentPlayer = response;
-
-            this.playerFormGroup.get('firstNameFormControl').setValue(this.currentPlayer.firstName);
-            this.playerFormGroup.get('lastNameFormControl').setValue(this.currentPlayer.lastName);
-            this.playerFormGroup.get('userMailFormControl').setValue(this.currentPlayer.userMail);
-            this.playerFormGroup.get('phoneNumberFormControl').setValue(this.currentPlayer.phoneNumber);
-            this.playerFormGroup.get('isActiveFormControl').setValue(this.currentPlayer.isActive);
-            this.playerFormGroup.get('rowFormControl').setValue(this.currentPlayer.playerStats.currentRow);
-        });
+        this.playerFormGroup.get('firstNameFormControl').setValue(this.data.firstName);
+        this.playerFormGroup.get('lastNameFormControl').setValue(this.data.lastName);
+        this.playerFormGroup.get('userMailFormControl').setValue(this.data.userMail);
+        this.playerFormGroup.get('phoneNumberFormControl').setValue(this.data.phoneNumber);
+        this.playerFormGroup.get('isActiveFormControl').setValue(this.data.active);
+        this.playerFormGroup.get('rowFormControl').setValue(this.data.playerStats.currentRow);
     }
 
     savePlayer() {
 
-        this.currentPlayer.firstName = this.playerFormGroup.get('firstNameFormControl').value;
-        this.currentPlayer.lastName = this.playerFormGroup.get('lastNameFormControl').value;
-        this.currentPlayer.userMail = this.playerFormGroup.get('userMailFormControl').value;
-        this.currentPlayer.phoneNumber = this.playerFormGroup.get('phoneNumberFormControl').value;
-        this.currentPlayer.isActive = this.playerFormGroup.get('isActiveFormControl').value;
-        this.currentPlayer.playerStats.currentRow = this.playerFormGroup.get('rowFormControl').value;
+        this.data.firstName = this.playerFormGroup.get('firstNameFormControl').value;
+        this.data.lastName = this.playerFormGroup.get('lastNameFormControl').value;
+        this.data.userMail = this.playerFormGroup.get('userMailFormControl').value;
+        this.data.phoneNumber = this.playerFormGroup.get('phoneNumberFormControl').value;
+        this.data.isActive = this.playerFormGroup.get('isActiveFormControl').value;
+        this.data.playerStats.currentRow = this.playerFormGroup.get('rowFormControl').value;
 
 
-        this.playerService.savePlayer(this.currentPlayer).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                } else {
-                    console.error('Nije uspješno spremljeno.');
-                }
+        this.playerService.savePlayer(this.data).subscribe(() => {
+            this.spinnerOn = false;
 
-                this.snackMessageService.showSuccess('Izmjena uspješna. ' +
-                    this.currentPlayer.firstName + ' ' + this.currentPlayer.lastName);
-            }, 1000);
-        });
+            this.snackMessageService.showSuccess('Izmjena uspješna. ' +
+                this.data.firstName + ' ' + this.data.lastName);
+
+            this.dialogRef.close();
+        },
+            err => {
+                this.spinnerOn = false;
+                this.snackMessageService.showError('Neuspješan unos. ' + err);
+            }
+        );
     }
 
-    backToHome() {
-        this.router.navigate(['/']);
+    closeDialog(): void {
+        this.dialogRef.close();
     }
 
 }
