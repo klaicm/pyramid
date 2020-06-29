@@ -19,7 +19,7 @@ export class AchievementsComponent implements OnInit {
   twentyWins: String = '../../../assets/images/twentyWins.png';
   fiftyWins: String = '../../../assets/images/fiftyWins.png';
   masters: String = '../../../assets/images/masters.png';
-  fiftyPlayed: String = '../../../assets/images/fiftyPlayed.png';
+  fiveStreak: String = '../../../assets/images/fiveStreak.png';
 
   constructor() { }
 

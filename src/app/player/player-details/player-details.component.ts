@@ -64,7 +64,10 @@ export class PlayerDetailsComponent implements OnInit {
 
         if (currSeasonRound.id === roundMatch.id) {
           this.playerSeasonMatches.push(this.playerMatches[i]);
-          this.playerSeasonMatches.sort((a, b) => a.matchDate > b.matchDate ? -1 : 1);
+          this.playerSeasonMatches.sort((a, b) => a.round.roundNumber > b.round.roundNumber ? -1 : 1);
+          if (season.seasonTier === 'friendly') {
+            this.playerSeasonMatches.sort((a, b) => a.matchDate > b.matchDate ? -1 : 1);
+          }
         }
       }
     }
