@@ -43,15 +43,11 @@ export class AddPlayerComponent implements OnInit {
 
         newPlayer.playerStats = playerStats;
 
-        this.playerService.addNewPlayer(newPlayer).subscribe(response => {
-            setTimeout(() => {
-                const listen = response;
-                if (response) {
-                } else {
-                    console.error('Nije uspješno spremljeno.');
-                }
-            }, 1000);
+        this.playerService.addNewPlayer(newPlayer).subscribe(() => {
             this.snackMessageService.showSuccess('Igrač dodan. ' + newPlayer.firstName + ' ' + newPlayer.lastName);
+
+        }, err => {
+            this.snackMessageService.showError('Došlo je do greške prilikom spremanja. ' + err);
         });
 
     }

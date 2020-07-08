@@ -70,9 +70,22 @@ export class FixturesComponent implements OnInit {
         }
     }
 
+    matchEditButton(matchPlayed: boolean) {
+        if (matchPlayed) {
+            return {
+                'background': '#3f51b5',
+                'color': 'white'
+            };
+        }
+        return {
+            'background': 'white',
+            'color': 'black'
+        };
+    }
+
     get isUserLoggedIn() {
         return this.authService.isUserLoggedIn();
-      }
+    }
 
     compareObjects(o1: any, o2: any): boolean {
         return o1.id === o2.id;

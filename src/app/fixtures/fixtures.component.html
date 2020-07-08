@@ -28,7 +28,7 @@
                         - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}</a>
                 </div>
                 <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;" *ngIf="isUserLoggedIn">
-                    <a class="res-input" *ngIf="!match.matchPlayed" (click)="navigateToMatchInput(match)">Unos</a>
+                    <a class="res-input" [ngStyle]="matchEditButton(match.matchPlayed)" (click)="navigateToMatchInput(match)">Unos</a>
                 </div>
             </div>
             <div style="border-bottom: 1px solid lightgray">
