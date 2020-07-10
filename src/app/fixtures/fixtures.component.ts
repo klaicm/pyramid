@@ -71,7 +71,7 @@ export class FixturesComponent implements OnInit {
     }
 
     matchEditButton(matchPlayed: boolean) {
-        if (matchPlayed) {
+        if (!matchPlayed) {
             return {
                 'background': '#3f51b5',
                 'color': 'white'

@@ -18,8 +18,11 @@ export class AchievementsComponent implements OnInit {
   tenWins: String = '../../../assets/images/tenWins.png';
   twentyWins: String = '../../../assets/images/twentyWins.png';
   fiftyWins: String = '../../../assets/images/fiftyWins.png';
-  masters: String = '../../../assets/images/masters.png';
+  threeStreak: String = '../../../assets/images/threeStreak.png';
   fiveStreak: String = '../../../assets/images/fiveStreak.png';
+  tenStreak: String = '../../../assets/images/tenStreak.png';
+  twoBagelsWin: String = '../../../assets/images/twoBagelsWin.png';
+  sevenSixWin: String = '../../../assets/images/sevenSixWin.png';
 
   constructor() { }
 

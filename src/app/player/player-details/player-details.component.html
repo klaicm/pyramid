@@ -60,11 +60,13 @@
         {{match.round.roundDescription}}
       </tr>
       <tr>
-        <td><a
-            (click)="navigateToPlayer(player?.id === match?.playerWinner.id ? match?.playerDefeated.id : match?.playerWinner.id)">{{(player?.id === match?.playerWinner.id) ? (match?.playerDefeated.firstName + ' ' + match?.playerDefeated.lastName)
-          : (match?.playerWinner.firstName + ' ' + match?.playerWinner.lastName)}}</a></td>
-        <td style="text-align: right;">{{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}</td>
+        <a (click)="navigateToPlayer(match?.playerRowAttacker.id)">
+          ({{match?.challengerRow}}) {{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}}</a> :
+        <a (click)="navigateToPlayer(match?.playerRowDefender.id)">
+          ({{match?.defenderRow}}) {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}
+        </a>
       </tr>
+      <tr>{{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}</tr>
     </table>
   </div>
 </div>
