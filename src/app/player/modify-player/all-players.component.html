@@ -1,32 +1,31 @@
 <div *ngIf="spinnerOn"></div>
 
 <div *ngIf="!spinnerOn">
-    <table style="width: 100%">
+    <table class="players-table">
         <tr>
-            <div
-                style="padding-top: 2px; padding-bottom: 2px; display: flex; border-bottom: 1px solid lightgray; background-color: lightgray; margin-bottom: 4px">
-                <div style="font-size: 13px; width: 50%; display: inline-block; padding-left: 8px;">
+            <div class="header-div">
+                <div class="player-name-header">
                     Naziv
                 </div>
-                <div style="font-size: 13px; width: 15%; display: inline-block;">
+                <div class="row-header">
                     Red
                 </div>
-                <div style="font-size: 13px; width: 15%; display: inline-block;">Aktivan</div>
+                <div class="row-header">Aktivan</div>
 
             </div>
         </tr>
         <tr *ngFor="let player of allPlayers" style="border-bottom: 1px solid lightgray">
-            <div style="padding-top: 2px; padding-bottom: 2px; display: flex">
-                <div style="font-size: 13px; width: 50%; display: inline-block; padding-left: 8px;">
+            <div class="data-row">
+                <div class="player-name">
                     {{player.lastName}} {{player.firstName}}
                 </div>
-                <div style="font-size: 13px; width: 15%; display: inline-block;">
+                <div class="player-row">
                     {{player.playerStats.currentRow}}.
                 </div>
                 <mat-icon [ngStyle]="isPlayerActive(player.active)">fiber_manual_record</mat-icon>
 
-                <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;">
-                    <a class="edit-player" (click)="modifyPlayerDialog(player)">Izmjena</a>
+                <div class="edit-button-div">
+                    <a class="edit-player" (click)="modifyPlayerDialog(player)">Uredi</a>
                 </div>
             </div>
         </tr>

@@ -33,13 +33,8 @@
   </tr>
 </table>
 
-<br>
-<div class="example-button-row">
-  <!--<button mat-raised-button color="primary" style="margin-right: 8px" (click)="matchInput(currentMatch)" *ngIf="currentMatch">Unos rezultata</button>-->
-  <button mat-raised-button color="primary" style="margin-right: 8px" (click)="friendlyMatchInput()">Unos prijateljskog
-    meča</button>
-</div>
-<br>
+<mat-divider style="margin-top: 16px; margin-bottom: 8px;"></mat-divider>
+
 <mat-form-field>
   <mat-label>Odabir sezone</mat-label>
   <mat-select [compareWith]="compareObjects" [(ngModel)]="currentSeason">
@@ -50,7 +45,7 @@
 </mat-form-field>
 <br>
 
-<div *ngFor="let match of playerSeasonMatches" [ngStyle]="styleMatch(player?.id, match)">
+<div class="played-match" *ngFor="let match of playerSeasonMatches" [ngStyle]="styleMatch(player?.id, match)">
   <div *ngIf="match.matchPlayed" style="padding: 4px">
     <table>
       <tr *ngIf="match.round.roundNumber === 0">
@@ -63,7 +58,7 @@
         <a (click)="navigateToPlayer(match?.playerRowAttacker.id)">
           ({{match?.challengerRow}}) {{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}}</a> :
         <a (click)="navigateToPlayer(match?.playerRowDefender.id)">
-          ({{match?.defenderRow}}) {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}
+          {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}} ({{match?.defenderRow}})
         </a>
       </tr>
       <tr>{{match?.setFirst}} {{match?.setSecond}} {{match?.setThird}}</tr>

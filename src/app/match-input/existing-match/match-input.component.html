@@ -60,7 +60,7 @@
             <button mat-raised-button color="primary" style="margin-right: 8px" (click)="saveSeasonMatch()"
                 [disabled]="matchFormGroup.invalid">Unos rezultata
             </button>
-            <button *ngIf="authService.isUserAdmin()" mat-raised-button color="warn" style="margin-right: 8px" (click)="deleteMatch()">Obriši meč (admin)
+            <button *ngIf="authService.isUserAdmin()" mat-raised-button color="warn" style="margin-right: 8px" (click)="deleteMatch()">Obriši meč
             </button>
         </section>
 

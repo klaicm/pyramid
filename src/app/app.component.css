@@ -1,12 +1,18 @@
 .title-div {
     text-align: center; 
-    background-color: #3f51b5; 
+    /*background: rgb(63,81,181);
+    background: linear-gradient(90deg, rgba(63,81,181,1) 0%, rgba(81,81,194,1) 100%, rgba(255,255,255,1) 100%);*/
+    background: linear-gradient(182.65deg,rgba(63,81,181,1) 0,rgba(81,81,194,1) 100%,rgba(255,255,255,1) 100%);
     color: white; 
     border-radius: 3px; 
     /*opacity: 80%;*/
     padding-left: 16px;
     padding-right: 8px;
     margin-bottom: 8px;
+}
+
+.app-body {
+    margin-bottom: 50px;
 }
 
 .name {
@@ -44,4 +50,15 @@
     padding: 8px;
     font-size: 16px;
     font-weight: 500;
+}
+
+@media only screen and (min-width: 600px) {
+
+    .title-div {
+        font-weight: 400;
+        padding-top: 6px;
+        font-size: 18px;
+        height: 50px;
+    }
+    
 }

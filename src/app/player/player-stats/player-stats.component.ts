@@ -101,7 +101,6 @@ export class PlayerStatsComponent implements OnInit {
               value: 4
             }
           },
-          showInLegend: true,
           startAngle: -90,
           endAngle: 90,
           center: ['50%', '75%'],
@@ -131,7 +130,7 @@ export class PlayerStatsComponent implements OnInit {
         }, {
           name: 'Porazi',
           y: 100 - this.percentage,
-          color: '#483D8B'
+          color: 'rgba(63,81,181,1)'
         }]
       }]
     };
@@ -171,7 +170,7 @@ export class PlayerStatsComponent implements OnInit {
       series: [{
         name: 'Red',
         type: 'column',
-        color: '#483D8B',
+        color: 'rgba(63,81,181,1)',
         data: playerRoundsThroughSeason,
         pointStart: 1
       }]

@@ -10,24 +10,24 @@
         </mat-select>
     </mat-form-field>
 
-    <table style="width: 100%">
+    <table class="fixtures-table">
         <tr *ngFor="let match of roundMatches; let i = index">
             <div *ngIf="match?.challengerRow != roundMatches[i-1]?.challengerRow || !match?.round.roundNumber === 0"
-                style="margin-top: 16px; background: lightgrey; border-radius: 4px; padding-left: 8px">
+                class="row-number">
                 {{match?.challengerRow}} -> {{match?.defenderRow}}
             </div>
-            <div style="padding-top: 2px; padding-bottom: 2px;">
-                <div style="font-size: 13px; width: 40%; display: inline-block;">
+            <div class="fixture-row">
+                <div class="fixture-pl-name">
                     <a (click)="navigateToPlayer(match?.playerRowAttacker.id)"
                         [ngStyle]="stylePlayerWinner(match.playerRowAttacker.id, match)">
                         {{match?.playerRowAttacker.firstName}} {{match?.playerRowAttacker.lastName}} </a>
                 </div>
-                <div style="font-size: 13px; width: 40%; display: inline-block;">
+                <div class="fixture-pl-name">
                     <a (click)="navigateToPlayer(match?.playerRowDefender.id)"
                         [ngStyle]="stylePlayerWinner(match.playerRowDefender.id, match)">
                         - {{match?.playerRowDefender.firstName}} {{match?.playerRowDefender.lastName}}</a>
                 </div>
-                <div style="font-size: 13px; width: 18%; display: inline-block; text-align: right;" *ngIf="isUserLoggedIn">
+                <div class="result-input-button" *ngIf="isUserLoggedIn">
                     <a class="res-input" [ngStyle]="matchEditButton(match.matchPlayed)" (click)="navigateToMatchInput(match)">Unos</a>
                 </div>
             </div>

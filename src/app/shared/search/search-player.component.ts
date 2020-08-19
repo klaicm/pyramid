@@ -35,7 +35,8 @@ export class SearchPlayerComponent implements OnInit {
     private _filter(value: any): any[] {
         const filterValue = value;
         return this.allPlayers.filter(option =>
-            (option.firstName.includes(filterValue) || option.lastName.includes(filterValue))
+            (option.firstName.toLowerCase().includes(filterValue.toLowerCase())
+                || option.lastName.toLowerCase().includes(filterValue.toLowerCase()))
         );
     }
 
